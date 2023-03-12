@@ -44,7 +44,7 @@ const page = (props) => {
 }
 
 export async function getStaticProps() {
-    const SERVER = process.env.SERVER
+    const SERVER = null//process.env.SERVER
 
     return {
         props: {
