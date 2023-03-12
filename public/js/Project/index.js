@@ -61,6 +61,7 @@ function create(Listener, canvas,) {
         tiles = tiles.sort((a, b) => a?.distanceValue-b?.distanceValue)
         if (tiles[0]?.distanceValue === tiles[1]?.distanceValue) tiles[0] = tiles[Math.floor(Math.random()*2)]
         if (tiles[0] && tiles[0].distanceValue > 0) {
+            if (state.mapInfo.startObject == currentMapedObject) state.mapInfo.distanceValue = tiles[0].distanceValue
             tiles[0].traced = true
             state.mapInfo.currentMapedObject = tiles[0]
         }

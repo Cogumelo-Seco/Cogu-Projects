@@ -29,13 +29,13 @@ export default async (canvas, index, Listener, functions) => {
 
                 if (tileInfo && tileInfo.type == 'air') {
                     let distanceValue = Number(tileInfo.distanceValue)
-                    
-                    //ctx.fillStyle = tileInfo.traced ? 'rgb(150, 120, 50)' : isNaN(distanceValue) ? '#AAA' : `hsl(0, 80%, ${50-(distanceValue*2) <= 5 ? 5 : 50-(distanceValue*2)}%)`
-                    ctx.fillStyle = tileInfo.traced ? 'rgb(150, 120, 50)' : '#AAA'
+
+                    //ctx.fillStyle = tileInfo.traced ? 'rgb(150, 120, 50)' : isNaN(distanceValue) ? '#AAA' : `hsl(0, 70%, ${50-(distanceValue*2)}%)`
+                    ctx.fillStyle = tileInfo.traced ? `hsl(${245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25)}, 100%, 40%)` /*'rgb(150, 120, 50)'*/ : '#AAA'
                     ctx.fillRect(X, Y, tileSize, tileSize)
 
                     ctx.font = `bold ${tileSize*0.4}px Arial`
-                    ctx.fillStyle = 'rgb(50, 50, 50)'
+                    ctx.fillStyle = tileInfo.traced ? `hsl(${tileInfo.distanceValue/index.state.mapInfo.distanceValue*25}, 100%, 40%)` : 'rgb(50, 50, 50)'
                     ctx.fillText(isNaN(distanceValue) ? '' : distanceValue, X+tileSize/2-ctx.measureText(isNaN(distanceValue) ? '' : distanceValue).width/2, Y+tileSize/2+5);
                 } else {
                     ctx.fillStyle = 'purple'//'#'+Math.floor(Math.random()*16777215).toString(16);
