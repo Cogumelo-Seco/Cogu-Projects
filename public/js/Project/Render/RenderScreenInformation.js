@@ -19,6 +19,20 @@ export default async (canvas, index, Listener, functions) => {
         y: 15,
         add: 1
     })
+
+    ctx.font = `bold 20px Arial`
+    functions.fillText({
+        text: `${index.state.mapInfo.distance} Distância direta`,
+        x: 5,
+        y: 25,
+        add: 1
+    })
+    functions.fillText({
+        text: `${index.state.mapInfo.startObject.X}X ${index.state.mapInfo.startObject.Y}Y`,
+        x: 5,
+        y: 55,
+        add: 1
+    })
 /*
     let cursorX = window.innerWidth*Listener.state.mouseInfo.x
     let cursorY = window.innerHeight*Listener.state.mouseInfo.y

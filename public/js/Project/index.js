@@ -11,16 +11,102 @@ function create(Listener, canvas,) {
         rainbowColor: 0,
 
         mapInfo: {
+            renderId: 1,
             width: 20,
             height: 20,
-            mapData: { },
+            distance: 0,
+            mapData: {
+                0: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                1: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                //2: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                3: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                4: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                5: { 
+                    0: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    1: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    2: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    3: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    4: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    6: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    7: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    8: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    9: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //11: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    12: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    13: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    14: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 
+                    15: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    16: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    17: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    18: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    19: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }
+                },
+                6: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                //7: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                8: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                9: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                10: { 
+                    0: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    1: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    2: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //3: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    4: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    6: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    7: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    8: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    9: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    11: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    12: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    13: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    14: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 
+                    15: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    16: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //17: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    18: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    19: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }
+                },
+                11: { 5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                12: { 5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                13: { 5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                14: { 5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                15: { 
+                    0: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    1: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //2: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    3: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    4: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    5: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    6: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //7: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    8: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    9: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    //11: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    12: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    13: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    14: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }, 
+                    15: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    16: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    17: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    18: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 },
+                    19: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 }
+                },
+                16: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                17: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                18: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+                19: { 10: { distanceValue: NaN, type: 'wall', X: 10, Y: 0 } },
+            },
             endObject: {
-                X: Math.floor(Math.random()*19),
-                Y: Math.floor(Math.random()*19),
+                X: 3,//Math.floor(Math.random()*19),
+                Y: 3//Math.floor(Math.random()*19)
             },
             startObject: {
-                X: Math.floor(Math.random()*19),
-                Y: Math.floor(Math.random()*19),
+                X: 18,//Math.floor(Math.random()*19),
+                Y: 18//Math.floor(Math.random()*19)
             },
             currentMapedObject: null
         }
@@ -41,6 +127,51 @@ function create(Listener, canvas,) {
 
         for (let y = 0;y < state.mapInfo.height;y++) {
             if (state.mapInfo.mapData[y] == undefined) state.mapInfo.mapData[y] = []
+            for (let x = 0;x < state.mapInfo.width;x++) {
+                if (!state.mapInfo.mapData[y][x]) state.mapInfo.mapData[y][x] = { distanceValue: NaN, type: 'air', X: x, Y: y, renderId: 0 }
+            }
+        }
+
+        
+
+        /*let startObject = state.mapInfo.startObject
+        let endObject = state.mapInfo.endObject
+        function loopY(y) {
+            if (y < 0) return
+            if (y > state.mapInfo.height) return
+            if (state.mapInfo.mapData[y] == undefined) state.mapInfo.mapData[y] = {}
+            
+            function loopX(x) {
+                let distanceValue = 0
+                let oldTileValue = state.mapInfo.mapData[y][x+(endObject.X < startObject.X ? 1 : -1)]?.distanceValue
+                //distanceValue = state.mapInfo.mapData[y][x] ? state.mapInfo.mapData[y][x].type != 'air' ? (oldTileValue || 0)-Math.abs(endObject.X-x) : (oldTileValue || 0)+1 : (oldTileValue || 0)+1 || 1
+                //Math.abs(Math.abs(endObject.X-x)+Math.abs(endObject.Y-y))
+                /*if (!state.mapInfo.mapData[y][x])
+                distanceValue = state.mapInfo.mapData[y][x] && state.mapInfo.mapData[y][x].type != 'air' ? Infinity : Math.abs(Math.abs(endObject.X-x)+Math.abs(endObject.Y-y))
+
+                state.mapInfo.mapData[y][x] = {
+                    distanceValue: state.mapInfo.mapData[y][x]?.distanceValue || distanceValue,//: distanceValue+Math.abs(endObject.X-x)+Math.abs(endObject.Y-y), 
+                    type: state.mapInfo.mapData[y][x]?.type || 'air', 
+                    traced: state.mapInfo.mapData[y][x]?.traced || false,
+                    X: x, 
+                    Y: y 
+                }
+
+                //if (endObject.X-x && (!state.mapInfo.mapData[y][x+1] || state.mapInfo.mapData[y][x+1] == 'air' || !state.mapInfo.mapData[y][x-1] || state.mapInfo.mapData[y][x-1] == 'air')) 
+
+                if (endObject.X-x) loopX(x+(endObject.X < startObject.X ? -1 : 1))
+            }
+            loopX(state.mapInfo.startObject.X)
+
+            /*if (state.mapInfo.mapData[y+(endObject.Y < startObject.Y ? -1 : 1)]?.type != 'air') loopY(y+(endObject.Y < startObject.Y ? 1 : -1), Math.abs(startObject.Y-y*2))
+            else
+            
+            loopY(y+1)
+        }
+        loopY(0)
+
+        /*for (let y = 0;y < state.mapInfo.height;y++) {
+            if (state.mapInfo.mapData[y] == undefined) state.mapInfo.mapData[y] = []
 
             for (let x = 0;x < state.mapInfo.width;x++) {
                 let distanceValue = NaN
@@ -49,29 +180,76 @@ function create(Listener, canvas,) {
 
                 if (!state.mapInfo.mapData[y][x]) state.mapInfo.mapData[y][x] = { distanceValue, type: 'air', X: x, Y: y }
             }
-        }
-
-        let currentMapedObject = state.mapInfo.currentMapedObject || state.mapInfo.startObject
-        let tiles = [
-            (state.mapInfo.mapData[currentMapedObject.Y+1] ? state.mapInfo.mapData[currentMapedObject.Y+1][currentMapedObject.X] : null),
-            (state.mapInfo.mapData[currentMapedObject.Y+1] ? state.mapInfo.mapData[currentMapedObject.Y-1][currentMapedObject.X] : null),
-            (state.mapInfo.mapData[currentMapedObject.Y+1] ? state.mapInfo.mapData[currentMapedObject.Y][currentMapedObject.X+1] : null),
-            (state.mapInfo.mapData[currentMapedObject.Y+1] ? state.mapInfo.mapData[currentMapedObject.Y][currentMapedObject.X-1] : null)
-        ]
-        tiles = tiles.sort((a, b) => a?.distanceValue-b?.distanceValue)
-        if (tiles[0]?.distanceValue === tiles[1]?.distanceValue) tiles[0] = tiles[Math.floor(Math.random()*2)]
-        if (tiles[0] && tiles[0].distanceValue > 0) {
-            if (state.mapInfo.startObject == currentMapedObject) state.mapInfo.distanceValue = tiles[0].distanceValue
-            tiles[0].traced = true
-            state.mapInfo.currentMapedObject = tiles[0]
-        }
-
+        }*/
 
         /* !!!!!!! FPS LIMITADO !!!!!!! */
 
-        if (state.LoopFPSControlTime+20 <= +new Date()) {
+        if (state.LoopFPSControlTime+50 <= +new Date()) {
             state.LoopFPSControlTime = +new Date()
             state.rainbowColor += 1
+
+            let endObject = state.mapInfo.endObject
+            let startObject = state.mapInfo.startObject
+            function loopTile(tile, distance) {
+                if (tile && tile.renderId != String(state.mapInfo.renderId)/*isNaN(Number(tile.distanceValue))*/) {
+                    tile.distanceValue = tile.type == 'air' ? distance : Infinity
+                    tile.renderId = String(state.mapInfo.renderId)
+
+                    try {
+                        if (tile.type == 'air') {
+                            setTimeout(() => {
+                                if (state.mapInfo.mapData[tile.Y+1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y+1][tile.X], distance+1)
+                                if (state.mapInfo.mapData[tile.Y-1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y-1][tile.X], distance+1)
+                                if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X+1], distance+1)
+                                if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X-1], distance+1)
+                            }, 0)
+                        }
+                    } catch {}
+                }
+            }
+            loopTile(state.mapInfo.mapData[endObject.Y][endObject.X], 0)
+
+            let tiles = []
+            if (state.mapInfo.mapData[startObject.Y+1] && state.mapInfo.mapData[startObject.Y+1][startObject.X]) tiles.push(state.mapInfo.mapData[startObject.Y+1][startObject.X])
+            if (state.mapInfo.mapData[startObject.Y-1] && state.mapInfo.mapData[startObject.Y-1][startObject.X]) tiles.push(state.mapInfo.mapData[startObject.Y-1][startObject.X])
+            if (state.mapInfo.mapData[startObject.Y] && state.mapInfo.mapData[startObject.Y][startObject.X+1]) tiles.push(state.mapInfo.mapData[startObject.Y][startObject.X+1])
+            if (state.mapInfo.mapData[startObject.Y] && state.mapInfo.mapData[startObject.Y][startObject.X-1]) tiles.push(state.mapInfo.mapData[startObject.Y][startObject.X-1])
+            tiles = tiles.sort((a, b) => a?.distanceValue-b?.distanceValue)
+            //if (tiles[0]?.distanceValue === tiles[1]?.distanceValue) tiles[0] = tiles[Math.floor(Math.random()*2)]
+            if (tiles[0] && tiles[0].distanceValue >= 0 && tiles[0].distanceValue < state.mapInfo.mapData[startObject.Y][startObject.X].distanceValue) {
+                startObject.X = tiles[0].X
+                startObject.Y = tiles[0].Y
+            }
+
+            state.mapInfo.distance = Math.abs(Math.abs(startObject.X-endObject.X)+Math.abs(startObject.Y-endObject.Y))
+
+            if (state.mapInfo.distance <= 0) {
+                function newPos() {
+                    let X = Math.floor(Math.random()*19)
+                    let Y = Math.floor(Math.random()*19)
+                    if (state.mapInfo.mapData[Y][X].type == 'air') {
+                        for (let y = 0;y < state.mapInfo.height;y++) {
+                            for (let x = 0;x < state.mapInfo.width;x++) {
+                                state.mapInfo.mapData[y][x].distanceValue = NaN
+                            }
+                        }
+                        /*state.mapInfo.endObject.X = NaN
+                        state.mapInfo.endObject.Y = NaN
+
+                        for (let y = 0;y <= state.mapInfo.height;y++) {
+                            for (let x = 0;x <= state.mapInfo.width;x++) {
+                                if (y == state.mapInfo.height && x == state.mapInfo.width) {*/
+                                    state.mapInfo.endObject.X = X
+                                    state.mapInfo.endObject.Y = Y
+
+                                    state.mapInfo.renderId += 1
+                                /*} else if (state.mapInfo.mapData[y] && state.mapInfo.mapData[y][x]) state.mapInfo.mapData[y][x].distanceValue = NaN
+                            }
+                        }*/
+                    } else setTimeout(() => newPos(), 0)
+                }
+                newPos()
+            }
         }
     }
 

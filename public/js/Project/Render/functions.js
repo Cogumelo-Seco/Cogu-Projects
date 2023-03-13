@@ -13,6 +13,12 @@ export default (canvas, index, Listener) => {
             ctx.fillStyle = style || 'white'
             ctx.fillText(text, x, y);
             ctx.globalAlpha = oldAlpha
+        },
+        fillTile(...props) {
+            ctx.fillRect(...props)
+            ctx.strokeStyle = ctx.fillStyle
+            ctx.lineWidth = 2
+            ctx.strokeRect(...props)
         }
     }
 }
