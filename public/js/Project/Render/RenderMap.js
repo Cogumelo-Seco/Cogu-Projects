@@ -3,13 +3,13 @@ export default async (canvas, index, Listener, functions) => {
 
     let mapWidthTiles = index.state.mapInfo.width
     let mapHeightTiles = index.state.mapInfo.height
-    let mapWidth = canvas.height < canvas.width ? canvas.height : canvas.width//20*(canvas.width/canvas.height*10)
-    let mapHeight = canvas.height < canvas.width ? canvas.height : canvas.width//20*(canvas.width/canvas.height*10)
+    let mapWidth = canvas.height < canvas.width ? canvas.height : canvas.width
+    let mapHeight = canvas.height < canvas.width ? canvas.height : canvas.width
     let tileSize = mapWidth/mapWidthTiles
     let initialX = canvas.width/2-mapWidth/2
     let initialY = canvas.height/2-mapHeight/2
 
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = 'black'
     ctx.fillRect(initialX, initialY, mapWidth, mapHeight)
 
     for (let Xpos = 0;Xpos < mapWidthTiles;Xpos++) {
@@ -30,13 +30,15 @@ export default async (canvas, index, Listener, functions) => {
                 if (tileInfo && tileInfo.type == 'air') {
                     let distanceValue = Number(tileInfo.distanceValue)
 
-                    ctx.fillStyle = tileInfo.traced ? `hsl(${245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25)}, 100%, 40%)` : isNaN(distanceValue) ? `hsl(0, 70%, 0%)` : `hsl(275, 100%, ${50-(distanceValue*1.7)}%)`
-                    //ctx.fillStyle = tileInfo.traced ? `hsl(${245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25)}, 100%, 40%)` /*'rgb(150, 120, 50)'*/ : '#AAA'
-                    functions.fillTile(X, Y, tileSize, tileSize)
+                    if (!isNaN(distanceValue)) {
+                        ctx.fillStyle = tileInfo.traced ? `hsl(${245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25)}, 100%, 40%)` : `hsl(275, 100%, ${50-(distanceValue*1.7)}%)`
+                        //ctx.fillStyle = tileInfo.traced ? `hsl(${245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25)}, 100%, 40%)` /*'rgb(150, 120, 50)'*/ : '#AAA'
+                        functions.fillTile(X, Y, tileSize, tileSize)
 
-                    ctx.font = `bold ${tileSize*0.4}px Arial`
-                    ctx.fillStyle = tileInfo.traced ? `hsl(${360-(245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25))}, 100%, 40%)` : 'rgb(150, 150, 150)'
-                    //ctx.fillText(isNaN(distanceValue) ? '??' : distanceValue, X+tileSize/2-ctx.measureText(isNaN(distanceValue) ? '??' : distanceValue).width/2, Y+tileSize/2+5);
+                        ctx.font = `bold ${tileSize*0.4}px Arial`
+                        ctx.fillStyle = tileInfo.traced ? `hsl(${360-(245+(tileInfo.distanceValue/index.state.mapInfo.distanceValue*25))}, 100%, 40%)` : 'rgb(150, 150, 150)'
+                        //ctx.fillText(isNaN(distanceValue) ? '??' : distanceValue, X+tileSize/2-ctx.measureText(isNaN(distanceValue) ? '??' : distanceValue).width/2, Y+tileSize/2+5);
+                    }
                 } else if (tileInfo && tileInfo.type == 'wall') {
                     ctx.fillStyle = 'rgba(40, 40, 40)'
                     functions.fillTile(X, Y, tileSize, tileSize)

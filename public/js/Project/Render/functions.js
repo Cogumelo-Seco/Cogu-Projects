@@ -17,7 +17,7 @@ export default (canvas, index, Listener) => {
         fillTile(...props) {
             ctx.fillRect(...props)
             ctx.strokeStyle = ctx.fillStyle
-            ctx.lineWidth = 2
+            ctx.lineWidth = 1
             ctx.strokeRect(...props)
         }
     }

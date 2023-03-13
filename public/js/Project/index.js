@@ -11,6 +11,9 @@ function create(Listener, canvas,) {
         rainbowColor: 0,
 
         mapInfo: {
+            maped: 0,
+            points: 0,
+            render: true,
             renderId: 1,
             width: 20,
             height: 20,
@@ -132,56 +135,6 @@ function create(Listener, canvas,) {
             }
         }
 
-        
-
-        /*let startObject = state.mapInfo.startObject
-        let endObject = state.mapInfo.endObject
-        function loopY(y) {
-            if (y < 0) return
-            if (y > state.mapInfo.height) return
-            if (state.mapInfo.mapData[y] == undefined) state.mapInfo.mapData[y] = {}
-            
-            function loopX(x) {
-                let distanceValue = 0
-                let oldTileValue = state.mapInfo.mapData[y][x+(endObject.X < startObject.X ? 1 : -1)]?.distanceValue
-                //distanceValue = state.mapInfo.mapData[y][x] ? state.mapInfo.mapData[y][x].type != 'air' ? (oldTileValue || 0)-Math.abs(endObject.X-x) : (oldTileValue || 0)+1 : (oldTileValue || 0)+1 || 1
-                //Math.abs(Math.abs(endObject.X-x)+Math.abs(endObject.Y-y))
-                /*if (!state.mapInfo.mapData[y][x])
-                distanceValue = state.mapInfo.mapData[y][x] && state.mapInfo.mapData[y][x].type != 'air' ? Infinity : Math.abs(Math.abs(endObject.X-x)+Math.abs(endObject.Y-y))
-
-                state.mapInfo.mapData[y][x] = {
-                    distanceValue: state.mapInfo.mapData[y][x]?.distanceValue || distanceValue,//: distanceValue+Math.abs(endObject.X-x)+Math.abs(endObject.Y-y), 
-                    type: state.mapInfo.mapData[y][x]?.type || 'air', 
-                    traced: state.mapInfo.mapData[y][x]?.traced || false,
-                    X: x, 
-                    Y: y 
-                }
-
-                //if (endObject.X-x && (!state.mapInfo.mapData[y][x+1] || state.mapInfo.mapData[y][x+1] == 'air' || !state.mapInfo.mapData[y][x-1] || state.mapInfo.mapData[y][x-1] == 'air')) 
-
-                if (endObject.X-x) loopX(x+(endObject.X < startObject.X ? -1 : 1))
-            }
-            loopX(state.mapInfo.startObject.X)
-
-            /*if (state.mapInfo.mapData[y+(endObject.Y < startObject.Y ? -1 : 1)]?.type != 'air') loopY(y+(endObject.Y < startObject.Y ? 1 : -1), Math.abs(startObject.Y-y*2))
-            else
-            
-            loopY(y+1)
-        }
-        loopY(0)
-
-        /*for (let y = 0;y < state.mapInfo.height;y++) {
-            if (state.mapInfo.mapData[y] == undefined) state.mapInfo.mapData[y] = []
-
-            for (let x = 0;x < state.mapInfo.width;x++) {
-                let distanceValue = NaN
-                let endObjectData = state.mapInfo.endObject
-                distanceValue = 0+Math.abs(endObjectData.X-x)+Math.abs(endObjectData.Y-y)
-
-                if (!state.mapInfo.mapData[y][x]) state.mapInfo.mapData[y][x] = { distanceValue, type: 'air', X: x, Y: y }
-            }
-        }*/
-
         /* !!!!!!! FPS LIMITADO !!!!!!! */
 
         if (state.LoopFPSControlTime+50 <= +new Date()) {
@@ -191,12 +144,13 @@ function create(Listener, canvas,) {
             let endObject = state.mapInfo.endObject
             let startObject = state.mapInfo.startObject
             function loopTile(tile, distance) {
-                if (tile && tile.renderId != String(state.mapInfo.renderId)/*isNaN(Number(tile.distanceValue))*/) {
+                if (tile && tile.renderId != String(state.mapInfo.renderId)) {
                     tile.distanceValue = tile.type == 'air' ? distance : Infinity
                     tile.renderId = String(state.mapInfo.renderId)
+                    state.mapInfo.maped += 1
 
                     try {
-                        if (tile.type == 'air') {
+                        if (tile.type == 'air' && state.mapInfo.render) {
                             setTimeout(() => {
                                 if (state.mapInfo.mapData[tile.Y+1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y+1][tile.X], distance+1)
                                 if (state.mapInfo.mapData[tile.Y-1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y-1][tile.X], distance+1)
@@ -204,6 +158,8 @@ function create(Listener, canvas,) {
                                 if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X-1], distance+1)
                             }, 0)
                         }
+
+                        if (!isNaN(state.mapInfo.mapData[startObject.Y][startObject.X].distanceValue)) state.mapInfo.render = false
                     } catch {}
                 }
             }
@@ -225,27 +181,22 @@ function create(Listener, canvas,) {
 
             if (state.mapInfo.distance <= 0) {
                 function newPos() {
-                    let X = Math.floor(Math.random()*19)
-                    let Y = Math.floor(Math.random()*19)
+                    let X = Math.floor(Math.random()*(state.mapInfo.width-1))
+                    let Y = Math.floor(Math.random()*(state.mapInfo.height-1))
                     if (state.mapInfo.mapData[Y][X].type == 'air') {
                         for (let y = 0;y < state.mapInfo.height;y++) {
                             for (let x = 0;x < state.mapInfo.width;x++) {
                                 state.mapInfo.mapData[y][x].distanceValue = NaN
                             }
                         }
-                        /*state.mapInfo.endObject.X = NaN
-                        state.mapInfo.endObject.Y = NaN
 
-                        for (let y = 0;y <= state.mapInfo.height;y++) {
-                            for (let x = 0;x <= state.mapInfo.width;x++) {
-                                if (y == state.mapInfo.height && x == state.mapInfo.width) {*/
-                                    state.mapInfo.endObject.X = X
-                                    state.mapInfo.endObject.Y = Y
+                        state.mapInfo.endObject.X = X
+                        state.mapInfo.endObject.Y = Y
 
-                                    state.mapInfo.renderId += 1
-                                /*} else if (state.mapInfo.mapData[y] && state.mapInfo.mapData[y][x]) state.mapInfo.mapData[y][x].distanceValue = NaN
-                            }
-                        }*/
+                        state.mapInfo.maped = 0
+                        state.mapInfo.points += 1
+                        state.mapInfo.renderId += 1
+                        state.mapInfo.render = true
                     } else setTimeout(() => newPos(), 0)
                 }
                 newPos()
