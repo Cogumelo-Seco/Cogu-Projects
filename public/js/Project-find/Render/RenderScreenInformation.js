@@ -23,27 +23,34 @@ export default async (canvas, index, Listener, functions) => {
     ctx.font = `bold 20px Arial`
     
     functions.fillText({
-        text: `${index.state.mapInfo.startObject.X}X ${index.state.mapInfo.startObject.Y}Y`,
-        x: 5,
-        y: 25,
-        add: 2
-    })
-    functions.fillText({
-        text: `Distância direta: ${index.state.mapInfo.distance}`,
+        text: `Geração: ${index.state.mapInfo.generation}`,
         x: 5,
         y: 55,
         add: 2
     })
     functions.fillText({
-        text: `Mapeado: ${index.state.mapInfo.maped}/${index.state.mapInfo.width*index.state.mapInfo.height}`,
+        text: `Geração com sucesso: ${index.state.mapInfo.endGeneration}`,
+        x: 5,
+        y: 85,
+        add: 2
+    })
+    /*
+    functions.fillText({
+        text: `Distância: ${index.state.mapInfo.distance}`,
         x: 5,
         y: 85,
         add: 2
     })
     functions.fillText({
-        text: `Pontos: ${index.state.mapInfo.points}`,
+        text: `Mapeado: ${index.state.mapInfo.maped}/${index.state.mapInfo.width*index.state.mapInfo.height}`,
         x: 5,
         y: 115,
+        add: 2
+    })
+    functions.fillText({
+        text: `Pontos: ${index.state.mapInfo.points}`,
+        x: 5,
+        y: 145,
         add: 2
     })
 /*

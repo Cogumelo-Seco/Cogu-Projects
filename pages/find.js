@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 //import { io } from 'socket.io-client';
 import React, { useEffect } from 'react';
 import Head from "next/head";
-import createIndex from '../public/js/Project-jump/index.js';
-import createListener from '../public/js/Project-jump/Listener.js';
-import render from '../public/js/Project-jump/Render/index.js';
+import createIndex from '../public/js/Project-find/index.js';
+import createListener from '../public/js/Project-find/Listener.js';
+import render from '../public/js/Project-find/Render/index.js';
 
 const page = (props) => {
     //const cookie = cookies(data)
