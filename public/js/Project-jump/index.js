@@ -9,7 +9,7 @@ function create(Listener, canvas) {
         highestScore: 0,
         generation: 0,
         alive: 0,
-        numberOfIndividuals: 500,
+        numberOfIndividuals: 1000,
         individuals: {},
         bestIndividual: null,
         mapObjects: [],
