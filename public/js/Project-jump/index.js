@@ -290,6 +290,8 @@ function create(Listener, canvas) {
                         individual.v = 0
                         individual.distance = 0
                         individual.score = 0
+                        individual.jumpCount = 0
+                        individual.ballonCount = 0
 
                         for (let a in state.individuals[i].data) {
                             for (let b in state.individuals[i].data[a]) {
