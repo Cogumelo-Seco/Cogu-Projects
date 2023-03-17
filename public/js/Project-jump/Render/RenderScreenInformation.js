@@ -9,18 +9,53 @@ export default async (canvas, index, Listener, functions) => {
     ctx.fillRect(0, 150, canvas.width, 5)
 
     if (bestIndividual) {
+        let size = 25
+        let X = canvas.width*0.4+70
         let Y = 150-bestIndividual.distance
+        let ballonsImage = index.state.images['imgs/balloons.png']
+        if (bestIndividual.ballon) {
+            Y = 150-bestIndividual.distance-55
+            ctx.drawImage(ballonsImage.image, X-((size*1.5-size)/2), Y-size, size*1.5, -size*1.5)
+        }
+
         ctx.fillStyle = bestIndividual.color || 'red'
         ctx.strokeStyle = 'black'
         ctx.lineWidth = 2
-        ctx.fillRect(canvas.width*0.4+70, Y, 25, -25)
-        ctx.strokeRect(canvas.width*0.4+70, Y, 25, -25)
+        ctx.fillRect(X, Y, size, -size)
+        ctx.strokeRect(X, Y, size, -size)
 
         let neuronSize = 10
         let neuralX = canvas.width*0.8
         let neuralY = 0
-        for (let i in bestIndividual.data) {
-            neuralY += 150/(bestIndividual.data.length+1)
+
+        
+        for (let i in bestIndividual.dataValue1) {
+            neuralY += 150/(Object.values(bestIndividual.dataValue1).length+1)
+            let nextNeuralY = 0
+
+            for (let i in bestIndividual.dataValue2) {
+                nextNeuralY += 150/(Object.keys(bestIndividual.dataValue2).length+1)
+
+                ctx.strokeStyle = 'hsl(13, 50%, 10%)'
+                ctx.beginPath();
+                ctx.moveTo(neuralX+(neuronSize/2), neuralY+(neuronSize/2));
+                ctx.lineTo(canvas.width*0.9+(neuronSize/2), nextNeuralY+(neuronSize/2));
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = 'hsl(13, 100%, 30%)'
+            ctx.beginPath();
+            ctx.arc(neuralX+(neuronSize/2), neuralY+(neuronSize/2), neuronSize, 0, 2 * Math.PI)
+            ctx.fill();
+
+            ctx.font = `bold 13px Arial`
+            functions.fillText({
+                text: `[${bestIndividual.data[0][i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`,
+                x: neuralX-ctx.measureText(`[${bestIndividual.data[0][i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`).width-8,
+                y: neuralY+8,
+                add: 1
+            })
+            /*neuralY += 150/(bestIndividual.data.length+1)
             let neuronValue = bestIndividual.data[i].value?.toFixed(2)//bestIndividual.dataValue1[i]?.toFixed(2)
             let nextNeuralY = 0
 
@@ -41,11 +76,11 @@ export default async (canvas, index, Listener, functions) => {
 
             ctx.font = `bold 13px Arial`
             functions.fillText({
-                text: `[${bestIndividual.data[i].type}] ${neuronValue}`,
-                x: neuralX-ctx.measureText(`[${bestIndividual.data[i].type}] ${neuronValue}`).width-8,
+                text: `[${bestIndividual.data[i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`,
+                x: neuralX-ctx.measureText(`[${bestIndividual.data[i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`).width-8,
                 y: neuralY+8,
                 add: 1
-            })
+            })*/
         }
 
         neuralX = canvas.width*0.9
@@ -83,15 +118,15 @@ export default async (canvas, index, Listener, functions) => {
         neuralY = 0
         for (let i in bestIndividual.dataValue3) {
             neuralY += 150/(Object.keys(bestIndividual.dataValue3).length+1)
-            let neuronValue = bestIndividual.dataValue3[i]
+            let neuron = bestIndividual.dataValue3[i]
             
-            ctx.fillStyle = neuronValue ? 'hsl(115, 100%, 25%)' : 'hsl(13, 100%, 30%)'
+            ctx.fillStyle = neuron.value ? 'hsl(115, 100%, 25%)' : 'hsl(13, 100%, 30%)'
             ctx.beginPath();
             ctx.arc(neuralX+(neuronSize/2), neuralY+(neuronSize/2), neuronSize, 0, 2 * Math.PI)
             ctx.fill();
 
             functions.fillText({
-                text: 'Pulo',
+                text: neuron.type,
                 x: neuralX+neuronSize+8,
                 y: neuralY+8,
                 add: 1
@@ -109,17 +144,31 @@ export default async (canvas, index, Listener, functions) => {
         })
     
         functions.fillText({
-            style: 'white',
-            text: `Pontuação: ${bestIndividual.score}`,
+            style: 'rgb(255, 200, 40)',
+            text: `${("000"+bestIndividual.id).slice(-3)}-${(index.state.generation+"00").slice(0, 2)}`,
             x: canvas.width*0.4+160,
             y: 50,
             add: 2
         })
         functions.fillText({
             style: 'white',
-            text: `Pulos: ${bestIndividual.jumpCount}`,
+            text: `Pontuação: ${bestIndividual.score}`,
             x: canvas.width*0.4+160,
             y: 70,
+            add: 2
+        })
+        functions.fillText({
+            style: 'white',
+            text: `Pulos: ${bestIndividual.jumpCount}`,
+            x: canvas.width*0.4+160,
+            y: 90,
+            add: 2
+        })
+        functions.fillText({
+            style: 'white',
+            text: `Balões: ${bestIndividual.ballonCount}`,
+            x: canvas.width*0.4+160,
+            y: 110,
             add: 2
         })
     }

@@ -10,6 +10,12 @@ export default async (canvas, index, Listener, functions) => {
         individual.Y = canvas.height-canvas.height*0.2-individual.distance
 
         if (!individual.dead) {
+            let ballonsImage = index.state.images['imgs/balloons.png']
+            if (individual.ballon) {
+                individual.Y = canvas.height-canvas.height*0.2-55
+                ctx.drawImage(ballonsImage.image, individual.X-((individual.size*1.5-individual.size)/2), individual.Y-individual.size, individual.size*1.5, -individual.size*1.5)
+            }
+
             ctx.fillStyle = individual.color || 'red'
             ctx.strokeStyle = 'black'
             ctx.lineWidth = 2
@@ -21,7 +27,7 @@ export default async (canvas, index, Listener, functions) => {
     for (let i in index.state.mapObjects) {
         let object = index.state.mapObjects[i]
 
-        if (object.X >= 0) {
+        if (object.X >= -object.width) {
             object.Y = canvas.height-canvas.height*0.2-object.altitude
 
             ctx.fillStyle = object.color || 'green'
