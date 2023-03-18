@@ -117,7 +117,7 @@ function create(Listener, canvas) {
                     ballonRechargeTime: 0,
                     ballonCount: 0,
                     dead: false,
-                    jumpForce: 4.3,
+                    jumpForce: 4.4,
                     jumpCount: 0,
                     time: +new Date(),
                     distance: 0,
