@@ -25,7 +25,7 @@ export default async (canvas, index, Listener, functions) => {
         ctx.fillRect(X, Y, size, -size)
         ctx.strokeRect(X, Y, size, -size)
         functions.fillText({
-            style: `hsl(${bestIndividual.color-100}, 100%, 50%)`,
+            style: 'black',
             text: ('0000'+bestIndividual.id).slice(-4),
             x: X+(size/2-ctx.measureText(('0000'+bestIndividual.id).slice(-4)).width/2),
             y: Y-(size/2)+5,
