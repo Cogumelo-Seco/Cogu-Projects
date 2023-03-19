@@ -44,7 +44,7 @@ function create(Listener, canvas) {
             //state.scoreTime = +new Date()
             state.speed = (state.score/1000+2)*2
 
-            if (state.score >= 100 && state.score%(120*3) == 0 && Math.floor(Math.random()*100) > 50) {
+            if (state.score >= 1000 && state.score%(120*3) == 0 && Math.floor(Math.random()*100) > 50) {
                 state.mapObjects.push({
                     type: 1,
                     color: 'yellow',
