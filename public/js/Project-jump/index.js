@@ -7,12 +7,14 @@ function create(Listener, canvas) {
         speed: 5,
         score: 0,
         highestScore: 0,
+        scoresArr: [ 0 ],
         generation: 0,
         alive: 0,
-        numberOfIndividuals: 1000,
+        numberOfIndividuals: 1500,
         individuals: {},
         bestIndividual: null,
         mapObjects: [],
+        testTimeStart: +new Date(),
         loading: {
             loaded: 0,
             total: 0,
@@ -31,26 +33,28 @@ function create(Listener, canvas) {
 
         /* !!!!!!! FPS LIMITADO !!!!!!! */
 
-        if (state.LoopFPSControlTime+100 <= +new Date()) {
+        if (state.LoopFPSControlTime+0 <= +new Date()) {
             state.LoopFPSControlTime = +new Date()
             state.rainbowColor += 1
 
             state.alive = Object.values(state.individuals).filter(i => !i.dead).length
-            state.score += 1
+            state.score += 1//Math.floor((+new Date()-state.scoreTime)/102)
             state.highestScore = state.highestScore >= state.score ? state.highestScore : state.score
-            state.speed = state.score/100+2
+            state.scoresArr[state.scoresArr.length-1] = state.score
+            //state.scoreTime = +new Date()
+            state.speed = (state.score/1000+2)*2
 
-            if (state.score >= 100 && state.score%75 == 0 && Math.floor(Math.random()*100) > 50) {
+            if (state.score >= 100 && state.score%(120*3) == 0 && Math.floor(Math.random()*100) > 50) {
                 state.mapObjects.push({
                     type: 1,
                     color: 'yellow',
                     X: canvas.width*2-30,
                     altitude: 0,
-                    width: 400,
-                    height: 20
+                    width: 600,
+                    height: 25
                 })
             }
-            if (state.score >= 10 && state.score%25 == 0) {
+            if (state.score >= 10 && state.score%120 == 0) {
                 let type = Math.floor(Math.random()*4)
                 let object = state.mapObjects.filter(o => o.type == 1 && o.X >= -o.width)[0]
 
@@ -84,23 +88,22 @@ function create(Listener, canvas) {
                         break
                     case 3:
                         state.mapObjects.push({
-                            color: 'red',
+                            color: 'rgb(255, 50, 200)',
                             X: canvas.width*2,
                             altitude: 55,
                             width: 35,
                             height: 25
                         })
                 }
-                
+            }
+
+            for (let i in state.mapObjects) {
+                state.mapObjects[i].X -= state.speed
             }
         }
 
         let bestIndividual = ((Object.values(state.individuals).filter(i => !i.dead)).sort((a, b) => b.score-a.score))[0]
         state.bestIndividual = bestIndividual
-
-        for (let i in state.mapObjects) {
-            state.mapObjects[i].X -= state.speed
-        }
 
 
         for (let i = 0;i < state.numberOfIndividuals;i++) {
@@ -129,45 +132,45 @@ function create(Listener, canvas) {
                         [
                             {
                                 type: 'Distância',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Velocidade',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Altura',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Largura',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Altitude',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             }
                         ],
                         [
                             {
                                 type: 'Distância',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Velocidade',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Altura',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Largura',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             },
                             {
                                 type: 'Altitude',
-                                value: Math.floor(Math.random()*2000)-1000,
+                                value: Math.random()*2000-1000,
                             }
                         ]
                     ]
@@ -191,15 +194,15 @@ function create(Listener, canvas) {
                 }
 
                 if (individual.ballon) {
-                    individual.ballonTime += state.speed*0.3
-                    if (individual.ballonTime >= 100*(state.speed*0.3)) {
+                    individual.ballonTime += state.speed//state.speed*0.2
+                    if (individual.ballonTime >= state.speed*101/*100*(state.speed*0.19)*/) {
                         individual.ballon = false
                         individual.distance = 55
                         individual.v = -individual.jumpForce
-                        individual.ballonRechargeTime = 300*(state.speed*0.3)
+                        individual.ballonRechargeTime = 300*(state.speed*0.15)
                     }
                 }
-                if (individual.ballonRechargeTime > 0) individual.ballonRechargeTime -= state.speed*0.5
+                if (individual.ballonRechargeTime > 0) individual.ballonRechargeTime -= state.speed*0.4
 
                 individual.score = state.score-(individual.jumpCount*10)
                 for (let a in individual.data) {
@@ -214,27 +217,22 @@ function create(Listener, canvas) {
                         for (let b in individual.data[a]) {
                             if (b == 0) {
                                 individual.dataValue1[b] = Math.abs(object.X-individual.X)
-                                //individual.dataValue2[a][b] = individual.data[a][b].value*Math.abs(object.X-individual.X)
                                 dataValue += individual.data[a][b].value*Math.abs(object.X-individual.X)
                             }
                             if (b == 1) {
                                 individual.dataValue1[b] = state.speed
-                                //individual.dataValue2[a][b] = individual.data[a][b].value*state.speed
                                 dataValue += individual.data[a][b].value*state.speed
                             }
                             if (b == 2) {
                                 individual.dataValue1[b] = object.height
-                                //individual.dataValue2[b] = individual.data[a][b].value*object.height
                                 dataValue += individual.data[a][b].value*object.height
                             }
                             if (b == 3) {
                                 individual.dataValue1[b] = object.width
-                                //individual.dataValue2[b] = individual.data[a][b].value*object.width
                                 dataValue += individual.data[a][b].value*object.width
                             }
                             if (b == 4) {
                                 individual.dataValue1[b] = object.altitude
-                                //individual.dataValue2[b] = individual.data[a][b].value*object.altitude
                                 dataValue += individual.data[a][b].value*object.altitude
                             }
                         }
@@ -252,14 +250,6 @@ function create(Listener, canvas) {
                         }
 
                         if (a == 0 && dataValue > 0 && Math.abs(individual.v) == 0 && !individual.ballon) {
-                           /* if (!object.detected) {
-                                individual.score = state.score+(canvas.width-object.X)*5
-                                object.detected = true
-                            }// else individual.score = state.score//+(canvas.width-object.X)*1.5
-                            individual.jumpCount += 1
-                            individual.score = state.score-(individual.jumpCount*10)
-                            individual.v = individual.jumpForce*/
-                            //individual.dataValue3[0] = { type: 'Pulo', value: true }
                             individual.dataValue3[0].value = true
                             individual.jumpCount += 1
                             individual.v = individual.jumpForce
@@ -274,6 +264,7 @@ function create(Listener, canvas) {
         let end = (Object.values(state.individuals).filter(i => i.dead)).length >= state.numberOfIndividuals
 
         if (end && !state.inReset) {
+            state.scoresArr.push(state.score)
             state.score = 0
             state.mapObjects = []
             state.inReset = true

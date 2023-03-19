@@ -47,7 +47,7 @@ export default (state, handleKeys) => {
         onClick: () => {
             state.game.state.renderType = state.game.state.renderType == 'limited' ? 'unlimited' : 'limited'
         }
-    }
+    }*/
 
     state.buttons['DevWaterMarkButton'] = {
         minX: 932,
@@ -60,7 +60,7 @@ export default (state, handleKeys) => {
             open('https://www.instagram.com/wellingtonfelipe_cogu/')
         }
     }
-
+/*
     state.buttons['ReturnPageButton'] = {
         gameStage: [ 'selectMusic', 'onlineServerList', 'settings' ],
         keyPress: [ 'KeyQ', 'Escape' ],
