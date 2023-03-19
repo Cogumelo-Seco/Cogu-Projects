@@ -12,7 +12,7 @@ export default async (canvas, index, Listener, functions) => {
         individual.X = canvas.width*0.15+individual.variantX
         individual.Y = baseY-individual.distance
 
-        if (!individual.dead && count <= 200) {
+        if (!individual.dead && count <= 100) {
             count += 1
             let ballonsImage = index.state.images['imgs/balloons.png']
             if (individual.ballon) {
@@ -21,13 +21,13 @@ export default async (canvas, index, Listener, functions) => {
             }
 
             ctx.font = 'bold 11px Arial'
-            ctx.fillStyle = individual.color || 'red'
+            ctx.fillStyle = `hsl(${individual.color}, 100%, 50%)`
             ctx.strokeStyle = 'black'
             ctx.lineWidth = 2
             ctx.fillRect(individual.X, individual.Y, individual.size, -individual.size)
             ctx.strokeRect(individual.X, individual.Y, individual.size, -individual.size)
             functions.fillText({
-                style: 'black',
+                style: `hsl(${individual.color-100}, 100%, 50%)`,
                 text: ('0000'+individual.id).slice(-4),
                 x: individual.X+(individual.size/2-ctx.measureText(('0000'+individual.id).slice(-4)).width/2),
                 y: individual.Y-(individual.size/2)+5,

@@ -1,7 +1,7 @@
 export default async (canvas, index, Listener, functions) => {
     const ctx = canvas.getContext('2d')
 
-    let bestIndividual = index.state.bestIndividual
+    let bestIndividual = ((Object.values(index.state.individuals).filter(i => !i.dead)).sort((a, b) => b.score-a.score))[0]
 
     ctx.fillStyle = '#999'
     ctx.fillRect(0, 0, canvas.width, 150)
@@ -19,13 +19,13 @@ export default async (canvas, index, Listener, functions) => {
         }
 
         ctx.font = 'bold 11px Arial'
-        ctx.fillStyle = bestIndividual.color || 'red'
+        ctx.fillStyle = `hsl(${bestIndividual.color}, 100%, 50%)`
         ctx.strokeStyle = 'black'
         ctx.lineWidth = 2
         ctx.fillRect(X, Y, size, -size)
         ctx.strokeRect(X, Y, size, -size)
         functions.fillText({
-            style: 'black',
+            style: `hsl(${bestIndividual.color-100}, 100%, 50%)`,
             text: ('0000'+bestIndividual.id).slice(-4),
             x: X+(size/2-ctx.measureText(('0000'+bestIndividual.id).slice(-4)).width/2),
             y: Y-(size/2)+5,

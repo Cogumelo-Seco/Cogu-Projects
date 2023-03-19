@@ -12,7 +12,6 @@ function create(Listener, canvas) {
         alive: 0,
         numberOfIndividuals: 1500,
         individuals: {},
-        bestIndividual: null,
         mapObjects: [],
         testTimeStart: +new Date(),
         loading: {
@@ -102,15 +101,11 @@ function create(Listener, canvas) {
             }
         }
 
-        let bestIndividual = ((Object.values(state.individuals).filter(i => !i.dead)).sort((a, b) => b.score-a.score))[0]
-        state.bestIndividual = bestIndividual
-
-
         for (let i = 0;i < state.numberOfIndividuals;i++) {
             let individual = state.individuals[i]
             if (!individual) {
                 state.individuals[i] = {
-                    color: '#'+Math.floor(Math.random()*16777215).toString(16),
+                    color: Math.floor(Math.random()*360),
                     id: i,
                     variantX: Math.floor(Math.random()*100)-50,
                     size: 25,
@@ -182,20 +177,16 @@ function create(Listener, canvas) {
                 let timeGap = 1//+new Date()-individual.time
                 individual.time = +new Date()
                 individual.distance = Math.min(Math.max(getNewDistance(individual.distance, individual.v, timeGap), 0), 100)
-                //individual.distance = individual.distance >= 150 ? 150 : individual.distance
                 individual.v = individual.distance <= 0 ? 0 : individual.v - (a * timeGap)
 
-                let object = state.mapObjects.find(o => 
+                if (state.mapObjects.find(o => 
                     o.X <= individual.X+individual.size && o.X+o.width >= individual.X &&
                     o.Y-o.height <= individual.Y && o.Y >= individual.Y-individual.size
-                )
-                if (object) {
-                    individual.dead = true
-                }
+                )) individual.dead = true
 
                 if (individual.ballon) {
                     individual.ballonTime += state.speed//state.speed*0.2
-                    if (individual.ballonTime >= state.speed*101/*100*(state.speed*0.19)*/) {
+                    if (individual.ballonTime >= state.speed*101) {
                         individual.ballon = false
                         individual.distance = 55
                         individual.v = -individual.jumpForce
@@ -205,6 +196,7 @@ function create(Listener, canvas) {
                 if (individual.ballonRechargeTime > 0) individual.ballonRechargeTime -= state.speed*0.4
 
                 individual.score = state.score-(individual.jumpCount*10)
+
                 for (let a in individual.data) {
                     if (!individual.dataValue3[a]) individual.dataValue3[a] = { type: null, value: false}
                     else individual.dataValue3[a].value = false
@@ -272,7 +264,7 @@ function create(Listener, canvas) {
             setTimeout(() => {
                 state.generation += 1
                 state.inReset = false
-                let bestIndividual = (Object.values(state.individuals).sort((a, b) => b.score-a.score))[0]
+                let bestData = JSON.parse(JSON.stringify((Object.values(state.individuals).sort((a, b) => b.score-a.score))[0].data))
 
                 for (let i in state.individuals) {
                     let individual = state.individuals[i]
@@ -286,11 +278,9 @@ function create(Listener, canvas) {
 
                         for (let a in state.individuals[i].data) {
                             for (let b in state.individuals[i].data[a]) {
-                                state.individuals[i].data[a][b].value = bestIndividual.data[a][b].value+(Number(i) != 0 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
+                                state.individuals[i].data[a][b].value = bestData[a][b].value+(Number(i) != 0 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
                                 state.individuals[i].data[a][b].value = state.individuals[i].data[a][b].value <= -1000 ? -1000 : state.individuals[i].data[a][b].value >= 1000 ? 1000 : state.individuals[i].data[a][b].value
                             }
-                            //state.individuals[i].data[a].value = bestIndividual.data[a].value+(Number(i) != 0 ? Math.random()*(1000*(Number(i)/state.numberOfIndividuals))-(500*(Number(i)/state.numberOfIndividuals)) : 0)
-                            //state.individuals[i].data[a].value = state.individuals[i].data[a].value <= -1000 ? -1000 : state.individuals[i].data[a].value >= 1000 ? 1000 : state.individuals[i].data[a].value
                         }
                     }
                 }
