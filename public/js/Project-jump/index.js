@@ -10,7 +10,7 @@ function create(Listener, canvas) {
         scoresArr: [ 0 ],
         generation: 0,
         alive: 0,
-        numberOfIndividuals: 1500,
+        numberOfIndividuals: 2000,
         individuals: {},
         mapObjects: [],
         testTimeStart: +new Date(),
@@ -45,17 +45,17 @@ function create(Listener, canvas) {
 
             if (state.score >= 1000 && state.score%(120*3) == 0 && Math.floor(Math.random()*100) > 50) {
                 state.mapObjects.push({
-                    type: 1,
+                    type: 0,
                     color: 'yellow',
                     X: canvas.width*2-30,
                     altitude: 0,
-                    width: 600,
+                    width: 100*state.speed,
                     height: 25
                 })
             }
             if (state.score >= 10 && state.score%120 == 0) {
                 let type = Math.floor(Math.random()*4)
-                let object = state.mapObjects.filter(o => o.type == 1 && o.X >= -o.width)[0]
+                let object = state.mapObjects.filter(o => o.type == 0 && o.X >= -o.width)[0]
 
                 if (!object) switch(type) {
                     case 0:
@@ -120,53 +120,44 @@ function create(Listener, canvas) {
                     time: +new Date(),
                     distance: 0,
                     v: 0,
-                    dataValue1: {},
+                    dataValue1: [
+                        {
+                            type: 'Distância',
+                            value: null
+                        },
+                        {
+                            type: 'Velocidade',
+                            value: null
+                        },
+                        {
+                            type: 'Altura',
+                            value: null
+                        },
+                        {
+                            type: 'Largura',
+                            value: null
+                        },
+                        {
+                            type: 'Altitude',
+                            value: null
+                        }
+                    ],
                     dataValue2: {},
                     dataValue3: {},
                     data: [
                         [
-                            {
-                                type: 'Distância',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Velocidade',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Altura',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Largura',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Altitude',
-                                value: Math.random()*2000-1000,
-                            }
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000
                         ],
                         [
-                            {
-                                type: 'Distância',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Velocidade',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Altura',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Largura',
-                                value: Math.random()*2000-1000,
-                            },
-                            {
-                                type: 'Altitude',
-                                value: Math.random()*2000-1000,
-                            }
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000
                         ]
                     ]
                 }
@@ -186,7 +177,7 @@ function create(Listener, canvas) {
 
                 if (individual.ballon) {
                     individual.ballonTime += state.speed//state.speed*0.2
-                    if (individual.ballonTime >= state.speed*101) {
+                    if (individual.ballonTime >= state.speed*100+50) {
                         individual.ballon = false
                         individual.distance = 55
                         individual.v = -individual.jumpForce
@@ -208,24 +199,24 @@ function create(Listener, canvas) {
                     if (object) {
                         for (let b in individual.data[a]) {
                             if (b == 0) {
-                                individual.dataValue1[b] = Math.abs(object.X-individual.X)
-                                dataValue += individual.data[a][b].value*Math.abs(object.X-individual.X)
+                                individual.dataValue1[b].value = Math.abs(object.X-individual.X)
+                                dataValue += individual.data[a][b]*Math.abs(object.X-individual.X)
                             }
                             if (b == 1) {
-                                individual.dataValue1[b] = state.speed
-                                dataValue += individual.data[a][b].value*state.speed
+                                individual.dataValue1[b].value = state.speed
+                                dataValue += individual.data[a][b]*state.speed
                             }
                             if (b == 2) {
-                                individual.dataValue1[b] = object.height
-                                dataValue += individual.data[a][b].value*object.height
+                                individual.dataValue1[b].value = object.height
+                                dataValue += individual.data[a][b]*object.height
                             }
                             if (b == 3) {
-                                individual.dataValue1[b] = object.width
-                                dataValue += individual.data[a][b].value*object.width
+                                individual.dataValue1[b].value = object.width
+                                dataValue += individual.data[a][b]*object.width
                             }
                             if (b == 4) {
-                                individual.dataValue1[b] = object.altitude
-                                dataValue += individual.data[a][b].value*object.altitude
+                                individual.dataValue1[b].value = object.altitude
+                                dataValue += individual.data[a][b]*object.altitude
                             }
                         }
 
@@ -278,8 +269,8 @@ function create(Listener, canvas) {
 
                         for (let a in state.individuals[i].data) {
                             for (let b in state.individuals[i].data[a]) {
-                                state.individuals[i].data[a][b].value = bestData[a][b].value+(Number(i) != 0 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
-                                state.individuals[i].data[a][b].value = state.individuals[i].data[a][b].value <= -1000 ? -1000 : state.individuals[i].data[a][b].value >= 1000 ? 1000 : state.individuals[i].data[a][b].value
+                                state.individuals[i].data[a][b] = bestData[a][b]+(Number(i) != 0 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
+                                state.individuals[i].data[a][b] = state.individuals[i].data[a][b] <= -1000 ? -1000 : state.individuals[i].data[a][b] >= 1000 ? 1000 : state.individuals[i].data[a][b]
                             }
                         }
                     }

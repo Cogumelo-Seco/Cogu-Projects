@@ -57,8 +57,8 @@ export default async (canvas, index, Listener, functions) => {
 
             ctx.font = `bold 13px Arial`
             functions.fillText({
-                text: `[${bestIndividual.data[0][i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`,
-                x: neuralX-ctx.measureText(`[${bestIndividual.data[0][i].type}] ${(bestIndividual.dataValue1[i] || 0)?.toFixed(2)}`).width-8,
+                text: `[${bestIndividual.dataValue1[i].type}] ${(bestIndividual.dataValue1[i].value || 0)?.toFixed(2)}`,
+                x: neuralX-ctx.measureText(`[${bestIndividual.dataValue1[i].type}] ${(bestIndividual.dataValue1[i].value || 0)?.toFixed(2)}`).width-8,
                 y: neuralY+8,
                 add: 1
             })
