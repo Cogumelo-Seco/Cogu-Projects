@@ -1,0 +1,148 @@
+body {
+    --border-1: #FFFFFF;
+    --border-2: #808080;
+    --border-3: #808080;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: rgb(61, 61, 61);
+}
+
+div#gameOptionsContent {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 25%;
+    height: auto;
+    color: white;
+}
+
+div#gameOptionsContent select,
+div#gameOptionsContent button {
+    margin: 5px 0;
+}
+
+div#minesweeperContent {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin: auto;
+    background-color: #c0c0c0;
+    /*min-width: 55vh;
+    /*min-height: 55vh;
+    max-width: 100%;
+    max-height: 100%;
+    width: min-content;
+    height: min-content;*/
+    min-width: 80vh;
+    max-width: 100%;
+    height: 90vh;
+}
+
+div#minesweeperHeader {
+    vertical-align: baseline;
+    width: auto;
+    height: 35px;
+    border-top: solid var(--border-1) 3px;
+    border-left: solid var(--border-1) 3px;
+    border-right: solid var(--border-2) 3px;
+    border-bottom: solid var(--border-2) 3px;
+}
+
+div#minesweeperHeader span.number {
+    /*display: inline-block;*/
+    font-family: ds-digib;
+    font-size: 25px;
+    margin: 3px;
+    color: red;
+    background-color: black;
+    padding: 2px 4px;
+    width: 57px;
+}
+
+div#minesweeperHeader span#playerMovements {
+    /*position: absolute;
+    left: 3px;*/
+    float: left;
+}
+
+div#minesweeperHeader span#playerTime {
+    /*position: absolute;
+    right: 3px;*/
+    float: right;
+}
+
+div#minesweeperHeader span.button {
+    display: block;
+    float: right;
+    margin: 3px;
+    border-top: solid var(--border-1) 3px;
+    border-left: solid var(--border-1) 3px;
+    border-right: solid var(--border-2) 3px;
+    border-bottom: solid var(--border-2) 3px;
+    background-color: #c0c0c0;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: url(../../imgs/Minesweeper/Flag.png);
+    width: 24px;
+    height: 24px;
+}
+
+div#minesweeperHeader span.button:hover {
+    background-color: #a7a7a7;
+}
+
+
+table#minesweeperTable {
+    border-collapse: separate;
+    width: 100%;
+    height: 100%;
+    background-color: #c0c0c0;
+}
+
+table#minesweeperTable th {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 150%;
+    font-weight: bold;
+    border-top: solid var(--border-1) 3px;
+    border-left: solid var(--border-1) 3px;
+    border-right: solid var(--border-2) 3px;
+    border-bottom: solid var(--border-2) 3px;
+    background-color: #c0c0c0;
+    cursor: pointer;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+}
+
+table#minesweeperTable th.notclicked:hover {
+    background-color: #aeaeae;
+}
+
+table#minesweeperTable th.clicked {
+    cursor: default;
+    border: solid var(--border-2) 3px;
+    background-color: #a7a7a7;
+}
+
+div#FPS {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-weight: bold;
+    color: white;
+}

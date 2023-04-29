@@ -1,4 +1,16 @@
-/*@font-face {
-    font-family: 'pok';
-    src: url(/fonts/pok.otf);
-}*/
+@font-face {
+    font-family: 'ds-digi';
+    src: url(/fonts/ds-digi.ttf);
+}
+@font-face {
+    font-family: 'ds-digib';
+    src: url(/fonts/ds-digib.ttf);
+}
+@font-face {
+    font-family: 'ds-digii';
+    src: url(/fonts/ds-digii.ttf);
+}
+@font-face {
+    font-family: 'ds-digit';
+    src: url(/fonts/ds-digit.ttf);
+}

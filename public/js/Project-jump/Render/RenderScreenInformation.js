@@ -56,12 +56,12 @@ export default async (canvas, index, Listener, functions) => {
             ctx.fill();
 
             ctx.font = `bold 13px Arial`
-            functions.fillText({
+            /*functions.fillText({
                 text: `[${bestIndividual.dataValue1[i].type}] ${(bestIndividual.dataValue1[i].value || 0)?.toFixed(2)}`,
                 x: neuralX-ctx.measureText(`[${bestIndividual.dataValue1[i].type}] ${(bestIndividual.dataValue1[i].value || 0)?.toFixed(2)}`).width-8,
                 y: neuralY+8,
                 add: 1
-            })
+            })*/
         }
 
         neuralX = canvas.width*0.9
@@ -87,12 +87,12 @@ export default async (canvas, index, Listener, functions) => {
             ctx.fill();
 
             ctx.font = `bold 13px Arial`
-            functions.fillText({
+            /*functions.fillText({
                 text: neuronValue,
                 x: neuralX-ctx.measureText(neuronValue).width-8,
                 y: neuralY+8,
                 add: 1
-            })
+            })*/
         }
 
         neuralX = canvas.width*0.93
@@ -106,12 +106,12 @@ export default async (canvas, index, Listener, functions) => {
             ctx.arc(neuralX+(neuronSize/2), neuralY+(neuronSize/2), neuronSize, 0, 2 * Math.PI)
             ctx.fill();
 
-            functions.fillText({
+            /*functions.fillText({
                 text: neuron.type,
                 x: neuralX+neuronSize+8,
                 y: neuralY+8,
                 add: 1
-            })
+            })*/
         }
 
         ctx.font = `bold 18px Arial`

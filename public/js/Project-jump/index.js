@@ -162,11 +162,13 @@ function create(Listener, canvas) {
                     ]
                 }
             } else if (!individual.dead) {
+
+                // Aceleração
                 let a = 15 * (10 ** (-2))
                 let getNewDistance = (S0, v, t) => S0 + v*t + 0.5 * (a*t)**2
 
                 let timeGap = 1//+new Date()-individual.time
-                individual.time = +new Date()
+                //individual.time = +new Date()
                 individual.distance = Math.min(Math.max(getNewDistance(individual.distance, individual.v, timeGap), 0), 100)
                 individual.v = individual.distance <= 0 ? 0 : individual.v - (a * timeGap)
 
