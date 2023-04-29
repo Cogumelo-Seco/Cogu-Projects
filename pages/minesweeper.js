@@ -99,9 +99,9 @@ const page = (props) => {
                     <div />
                     <span>Dificuldade: </span>
                     <select id="gameDificultySelect">
-                        <option value="0.1" id="0.2">Fácil</option>
-                        <option value="0.2" id="0.3">Normal</option>
-                        <option value="0.3" id="0.4">Difícil</option>
+                        <option value="0.1" id="0.1">Fácil</option>
+                        <option value="0.2" id="0.2">Normal</option>
+                        <option value="0.3" id="0.3">Difícil</option>
                     </select>
                     <div />
                     <button id="gameStartButton">Novo Jogo</button>
