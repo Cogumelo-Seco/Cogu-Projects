@@ -15,21 +15,21 @@ export default (state, { row, column, event, leftButton }) => {
             } else if (!tileInfo.clicked) {
                 state.playerMovements += 1
                 state.mapInfo.traceId += 1
-                function loopTile(row, column, traceId) {
+                function loopTile(row, column, traceId, lastTileNumber) {
                     state.mapInfo.reload = true
                     let tile = state.mapInfo.data[row] ? state.mapInfo.data[row][column] : null
                     if (tile && tile.traceId != traceId) {
                         state.mapInfo.data[row][column].clicked = true
                         state.mapInfo.data[row][column].traceId = traceId
                         setTimeout(() => {
-                            if (state.mapInfo.data[row-1] && state.mapInfo.data[row-1][column]?.number-1 <= tile.number) loopTile(row-1, column, traceId)
-                            if (state.mapInfo.data[row+1] && state.mapInfo.data[row+1][column]?.number-1 <= tile.number) loopTile(row+1, column)
-                            if (state.mapInfo.data[row][column-1]?.number-1 <= tile.number) loopTile(row, column-1)
-                            if (state.mapInfo.data[row][column+1]?.number-1 <= tile.number) loopTile(row, column+1)
+                            if (state.mapInfo.data[row-1] && (state.mapInfo.data[row-1][column]?.number == 0 || lastTileNumber == 0)) loopTile(row-1, column, traceId, state.mapInfo.data[row-1][column]?.number)
+                            if (state.mapInfo.data[row+1] && (state.mapInfo.data[row+1][column]?.number == 0 || lastTileNumber == 0)) loopTile(row+1, column, traceId, state.mapInfo.data[row+1][column]?.number)
+                            if ((state.mapInfo.data[row][column-1]?.number == 0 || lastTileNumber == 0)) loopTile(row, column-1, traceId, state.mapInfo.data[row][column-1]?.number)
+                            if ((state.mapInfo.data[row][column+1]?.number == 0 || lastTileNumber == 0)) loopTile(row, column+1, traceId, state.mapInfo.data[row][column+1]?.number)
                         }, 0)
                     }
                 }
-                loopTile(row, column, state.mapInfo.traceId)
+                loopTile(row, column, state.mapInfo.traceId, tileInfo.number)
             }
         } else {
             state.playerMovements += 1
