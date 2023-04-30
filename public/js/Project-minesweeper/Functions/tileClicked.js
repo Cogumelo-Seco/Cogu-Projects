@@ -2,7 +2,7 @@ export default (state, { row, column, event, leftButton }) => {
     let tileInfo = state.mapInfo.data[row] ? state.mapInfo.data[row][column] : null
 
     if (tileInfo && state.gameInProgress) {
-        if (leftButton) {
+        if (leftButton && !tileInfo.flag) {
             if (tileInfo.id == 1) {
                 state.gameInProgress = false
                 alert(`Você perdeu!\nTempo perdido: ${state.playerTimeString}`)
@@ -31,7 +31,9 @@ export default (state, { row, column, event, leftButton }) => {
                 }
                 loopTile(row, column, state.mapInfo.traceId, tileInfo.number)
             }
-        } else {
+        } 
+        
+        if (!leftButton) {
             state.playerMovements += 1
             tileInfo.flag = tileInfo.flag ? false : true
             state.mapInfo.reload = true
