@@ -4,9 +4,6 @@ import { useRouter } from 'next/router';
 //import { io } from 'socket.io-client';
 import React, { useEffect } from 'react';
 import Head from "next/head";
-import createIndex from '../public/js/Project-audio/index.js';
-import createListener from '../public/js/Project-audio/Listener.js';
-import render from '../public/js/Project-audio/Render/index.js';
 
 const page = (props) => {
     //const cookie = cookies(data)
