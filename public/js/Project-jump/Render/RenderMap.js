@@ -14,23 +14,27 @@ export default async (canvas, index, Listener, functions) => {
 
         if (!individual.dead && count <= 100) {
             count += 1
+
+            let individualWidth = individual.width
+            let individualHeight = individual.height
+
             let ballonsImage = index.state.images['imgs/balloons.png']
             if (individual.ballon) {
                 individual.Y = baseY-55
-                ctx.drawImage(ballonsImage.image, individual.X-((individual.size*1.5-individual.size)/2), individual.Y-individual.size, individual.size*1.5, -individual.size*1.5)
+                ctx.drawImage(ballonsImage.image, individual.X-((individualWidth*1.5-individualWidth)/2), individual.Y-individualHeight, individualWidth*1.5, -individualHeight*1.5)
             }
 
             ctx.font = 'bold 11px Arial'
             ctx.fillStyle = `hsl(${individual.color}, 100%, 50%)`
             ctx.strokeStyle = 'black'
             ctx.lineWidth = 2
-            ctx.fillRect(individual.X, individual.Y, individual.size, -individual.size)
-            ctx.strokeRect(individual.X, individual.Y, individual.size, -individual.size)
+            ctx.fillRect(individual.X, individual.Y, individualWidth, -individualHeight)
+            ctx.strokeRect(individual.X, individual.Y, individualWidth, -individualHeight)
             functions.fillText({
                 style: 'black',
                 text: ('0000'+individual.id).slice(-4),
-                x: individual.X+(individual.size/2-ctx.measureText(('0000'+individual.id).slice(-4)).width/2),
-                y: individual.Y-(individual.size/2)+5,
+                x: individual.X+(individualWidth/2-ctx.measureText(('0000'+individual.id).slice(-4)).width/2),
+                y: individual.Y-(individualHeight/2)+5,
             })
         }
     }

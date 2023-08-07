@@ -9,26 +9,28 @@ export default async (canvas, index, Listener, functions) => {
     ctx.fillRect(0, 150, canvas.width, 5)
 
     if (bestIndividual) {
-        let size = 25
         let X = canvas.width*0.4+60
         let Y = 150-bestIndividual.distance
+        let individualWidth = bestIndividual.width
+        let individualHeight = bestIndividual.height
+
         let ballonsImage = index.state.images['imgs/balloons.png']
         if (bestIndividual.ballon) {
             Y = 150-55
-            ctx.drawImage(ballonsImage.image, X-((size*1.5-size)/2), Y-size, size*1.5, -size*1.5)
+            ctx.drawImage(ballonsImage.image, X-((individualWidth*1.5-individualWidth)/2), Y-individualHeight, individualWidth*1.5, -individualHeight*1.5)
         }
 
         ctx.font = 'bold 11px Arial'
         ctx.fillStyle = `hsl(${bestIndividual.color}, 100%, 50%)`
         ctx.strokeStyle = 'black'
         ctx.lineWidth = 2
-        ctx.fillRect(X, Y, size, -size)
-        ctx.strokeRect(X, Y, size, -size)
+        ctx.fillRect(X, Y, individualWidth, -individualHeight)
+        ctx.strokeRect(X, Y, individualWidth, -individualHeight)
         functions.fillText({
             style: 'black',
             text: ('0000'+bestIndividual.id).slice(-4),
-            x: X+(size/2-ctx.measureText(('0000'+bestIndividual.id).slice(-4)).width/2),
-            y: Y-(size/2)+5,
+            x: X+(individualWidth/2-ctx.measureText(('0000'+bestIndividual.id).slice(-4)).width/2),
+            y: Y-(individualHeight/2)+5,
         })
 
         let neuronSize = 8
@@ -87,12 +89,12 @@ export default async (canvas, index, Listener, functions) => {
             ctx.fill();
 
             ctx.font = `bold 13px Arial`
-            /*functions.fillText({
+            functions.fillText({
                 text: neuronValue,
                 x: neuralX-ctx.measureText(neuronValue).width-8,
                 y: neuralY+8,
                 add: 1
-            })*/
+            })
         }
 
         neuralX = canvas.width*0.93
@@ -149,6 +151,13 @@ export default async (canvas, index, Listener, functions) => {
             text: `Balões: ${bestIndividual.ballonCount}`,
             x: canvas.width*0.4+160,
             y: 110,
+            add: 2
+        })
+        functions.fillText({
+            style: 'white',
+            text: `Abaixadas: ${bestIndividual.downCount}`,
+            x: canvas.width*0.4+160,
+            y: 130,
             add: 2
         })
     }

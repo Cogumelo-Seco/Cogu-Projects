@@ -54,13 +54,13 @@ function create(Listener, canvas) {
                 })
             }
             if (state.score >= 10 && state.score%120 == 0) {
-                let type = Math.floor(Math.random()*4)
+                let type = Math.floor(Math.random()*5)
                 let object = state.mapObjects.filter(o => o.type == 0 && o.X >= -o.width)[0]
 
                 if (!object) switch(type) {
                     case 0:
                         state.mapObjects.push({
-                            color: 'green',
+                            color: 'hsl(0, 100%, 50%)',
                             X: canvas.width*2,
                             altitude: 0,
                             width: 20,
@@ -69,7 +69,7 @@ function create(Listener, canvas) {
                         break
                     case 1:
                         state.mapObjects.push({
-                            color: 'rgb(100, 255, 100)',
+                            color: 'hsl(200, 100%, 50%)',
                             X: canvas.width*2,
                             altitude: 0,
                             width: 40,
@@ -78,7 +78,7 @@ function create(Listener, canvas) {
                         break
                     case 2:
                         state.mapObjects.push({
-                            color: 'rgb(255, 100, 50)',
+                            color: 'hsl(50, 100%, 50%)',
                             X: canvas.width*2,
                             altitude: 0,
                             width: 30,
@@ -87,12 +87,22 @@ function create(Listener, canvas) {
                         break
                     case 3:
                         state.mapObjects.push({
-                            color: 'rgb(255, 50, 200)',
+                            color: 'hsl(250, 100%, 50%)',
                             X: canvas.width*2,
                             altitude: 55,
                             width: 35,
                             height: 25
                         })
+                        break
+                    case 4:
+                        state.mapObjects.push({
+                            color: 'hsl(100, 100%, 50%)',
+                            X: canvas.width*2,
+                            altitude: 20,
+                            width: 35,
+                            height: 100
+                        })
+                        break
                 }
             }
 
@@ -109,8 +119,13 @@ function create(Listener, canvas) {
                     id: i,
                     variantX: Math.floor(Math.random()*100)-50,
                     size: 25,
+                    width: 25,
+                    height: 25,
                     score: 0,
                     ballon: false,
+                    down: true,
+                    downRechargeTime: 0,
+                    downCount: 0,
                     ballonTime: 0,
                     ballonRechargeTime: 0,
                     ballonCount: 0,
@@ -158,6 +173,13 @@ function create(Listener, canvas) {
                             Math.random()*2000-1000,
                             Math.random()*2000-1000,
                             Math.random()*2000-1000
+                        ],
+                        [
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000,
+                            Math.random()*2000-1000
                         ]
                     ]
                 }
@@ -173,8 +195,8 @@ function create(Listener, canvas) {
                 individual.v = individual.distance <= 0 ? 0 : individual.v - (a * timeGap)
 
                 if (state.mapObjects.find(o => 
-                    o.X <= individual.X+individual.size && o.X+o.width >= individual.X &&
-                    o.Y-o.height <= individual.Y && o.Y >= individual.Y-individual.size
+                    o.X <= individual.X+individual.width && o.X+o.width >= individual.X &&
+                    o.Y-o.height <= individual.Y && o.Y >= individual.Y-individual.height
                 )) individual.dead = true
 
                 if (individual.ballon) {
@@ -196,7 +218,7 @@ function create(Listener, canvas) {
                     //individual.dataValue3 = {0: { type: 'Balão', value: true }}
 
                     let dataValue = 0
-                    let object = (state.mapObjects.filter(o => o.X >= individual.X+individual.size)).sort((a, b) => a.X-b.X)[0]
+                    let object = (state.mapObjects.filter(o => o.X >= individual.X+individual.width)).sort((a, b) => a.X-b.X)[0]
 
                     if (object) {
                         for (let b in individual.data[a]) {
@@ -224,9 +246,26 @@ function create(Listener, canvas) {
 
                         individual.dataValue2[a] = dataValue
 
-                        individual.dataValue3[0].type = 'Pulo'
+                        individual.dataValue3[0].type = 'Abaixar'
                         individual.dataValue3[1].type = 'Balão'
-                        if (a == 1 && dataValue > 0 && !individual.ballon && individual.ballonRechargeTime <= 0) {
+                        individual.dataValue3[2].type = 'Pulo'
+
+                        if (a == 0 && +new Date()-individual.downRechargeTime >= 1000 && !individual.ballon && Math.abs(individual.v) == 0) {
+                            if (dataValue > 0 /*&& !individual.down*/) {
+                                individual.dataValue3[0].value = true
+                                individual.downRechargeTime = +new Date()
+                                individual.down = true
+                                individual.height = individual.size/1.5
+                                individual.downCount += 1
+                                individual.v = 0
+                                individual.distance = 0
+                            } else {
+                                individual.down = false
+                                individual.height = individual.size
+                            }
+                        }
+
+                        if (a == 1 && dataValue > 0 && !individual.down && !individual.ballon && individual.ballonRechargeTime <= 0 && Math.abs(individual.v) == 0) {
                             individual.dataValue3[1].value = true
                             individual.ballon = true
                             individual.ballonTime = 0
@@ -234,13 +273,14 @@ function create(Listener, canvas) {
                             individual.v = 0
                         }
 
-                        if (a == 0 && dataValue > 0 && Math.abs(individual.v) == 0 && !individual.ballon) {
-                            individual.dataValue3[0].value = true
+                        if (a == 2 && dataValue > 0 && Math.abs(individual.v) == 0 && !individual.ballon && !individual.down) {
+                            individual.dataValue3[2].value = true
                             individual.jumpCount += 1
                             individual.v = individual.jumpForce
+                            individual.height = individual.size
                         }
 
-                        individual.score = state.score-(individual.jumpCount*5)-(individual.ballonCount*2)
+                        individual.score = state.score-(individual.jumpCount*5)-(individual.ballonCount*2)-(individual.downCount*2)
                     }
                 }
             }
@@ -268,10 +308,12 @@ function create(Listener, canvas) {
                         individual.score = 0
                         individual.jumpCount = 0
                         individual.ballonCount = 0
+                        individual.down = false
+                        individual.downCount = 0
 
                         for (let a in state.individuals[i].data) {
                             for (let b in state.individuals[i].data[a]) {
-                                state.individuals[i].data[a][b] = bestData[a][b]+(Number(i) != 0 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
+                                state.individuals[i].data[a][b] = bestData[a][b]+(Number(i) >= 1 ? Math.random()*(2000*(Number(i)/state.numberOfIndividuals))-(1000*(Number(i)/state.numberOfIndividuals)) : 0)
                                 state.individuals[i].data[a][b] = state.individuals[i].data[a][b] <= -1000 ? -1000 : state.individuals[i].data[a][b] >= 1000 ? 1000 : state.individuals[i].data[a][b]
                             }
                         }
