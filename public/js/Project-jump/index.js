@@ -214,7 +214,7 @@ function create(Listener, canvas) {
 
                 for (let a in individual.data) {
                     if (!individual.dataValue3[a]) individual.dataValue3[a] = { type: null, value: false}
-                    else individual.dataValue3[a].value = false
+                    //else individual.dataValue3[a].value = false
                     //individual.dataValue3 = {0: { type: 'Balão', value: true }}
 
                     let dataValue = 0
@@ -260,10 +260,11 @@ function create(Listener, canvas) {
                                 individual.v = 0
                                 individual.distance = 0
                             } else {
+                                individual.dataValue3[0].value = false
                                 individual.down = false
                                 individual.height = individual.size
                             }
-                        }
+                        } else if (a == 0 && dataValue < 0) individual.dataValue3[0].value = false
 
                         if (a == 1 && dataValue > 0 && !individual.down && !individual.ballon && individual.ballonRechargeTime <= 0 && Math.abs(individual.v) == 0) {
                             individual.dataValue3[1].value = true
@@ -271,14 +272,14 @@ function create(Listener, canvas) {
                             individual.ballonTime = 0
                             individual.ballonCount += 1
                             individual.v = 0
-                        }
+                        } else if (a == 1 && dataValue < 0) individual.dataValue3[1].value = false
 
                         if (a == 2 && dataValue > 0 && Math.abs(individual.v) == 0 && !individual.ballon && !individual.down) {
                             individual.dataValue3[2].value = true
                             individual.jumpCount += 1
                             individual.v = individual.jumpForce
                             individual.height = individual.size
-                        }
+                        } else if (a == 2 && dataValue < 0) individual.dataValue3[2].value = false
 
                         individual.score = state.score-(individual.jumpCount*5)-(individual.ballonCount*2)-(individual.downCount*2)
                     }
