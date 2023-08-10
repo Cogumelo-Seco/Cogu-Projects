@@ -44,40 +44,6 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
             }
             addGhost()
         }
-
-        /*let removeGhostAndAddPacManCount = 0
-        let removeGhostAndAddPacManinterval = setInterval(() => {
-            let ghostLineY = null
-            let ghostLineX = null
-            for (let y in state.map) {
-                if (state.map[y].includes(ghostId)) {
-                    ghostLineY = Number(y)
-                    ghostLineX = state.map[y].indexOf(ghostId)
-                }
-            }
-            if (ghostLineY != null && ghostLineX != null) {
-                state.map[ghostLineY][ghostLineX] = 3
-
-                let pacManLineX = null
-                let pacManLineY = null
-                for (let y in state.map) {
-                    if (state.map[y].includes(9)) {
-                        pacManLineY = Number(y)
-                        pacManLineX = state.map[y].indexOf(9)
-                    }
-                }
-
-                if (pacManLineY == null && pacManLineX == null) {
-                    state.pacMan.dalay = 0
-                    state.map[lineY][lineX] = 9
-                }
-
-                clearInterval(removeGhostAndAddPacManinterval)
-            } else {
-                removeGhostAndAddPacManCount += 1
-                if (removeGhostAndAddPacManCount >= 50) clearInterval(removeGhostAndAddPacManinterval)
-            }
-        }, 100)*/
     } else {
         state.pauseMovement = true
 
