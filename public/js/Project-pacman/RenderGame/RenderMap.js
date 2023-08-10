@@ -25,7 +25,7 @@ export default async (canvas, game, Listener, randomColor) => {
                     }
                     /*ctx.fillStyle = '#fff'
                     ctx.font = `${tileSize/2}px Arial`
-                    ctx.fillText(map[lineY][lineX].distanceOfCenter || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distanceOfCenter || 0).width/2), y+tileSize/1.5)*/
+                    ctx.fillText(map[lineY][lineX].distance || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distance || 0).width/2), y+tileSize/1.5)*/
                     break
                 case 1:
                     let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*3)+4 : 6
@@ -56,7 +56,7 @@ export default async (canvas, game, Listener, randomColor) => {
                 case 3:
                     /*ctx.fillStyle = '#fff'
                     ctx.font = `${tileSize/2}px Arial`
-                    ctx.fillText(map[lineY][lineX].distanceOfCenter || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distanceOfCenter || 0).width/2), y+tileSize/1.5)
+                    ctx.fillText(map[lineY][lineX].distance || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distance || 0).width/2), y+tileSize/1.5)
                     /*ctx.fillStyle = 'transparent'
                     ctx.fillRect(x, y, tileSize, tileSize)*/
                     break

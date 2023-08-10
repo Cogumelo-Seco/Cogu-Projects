@@ -93,6 +93,11 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             state.lowMode = state.lowMode ? false : true
             return state.lowMode ? true : false
         },
+        life: function () {
+            let add = state.lifes >= 10 ? false : true
+            if (add) state.lifes += 2
+            return add
+        },
         codes: function () {
             let codesText = ''
             let codesList = codesFunction()

@@ -39,7 +39,7 @@ function createGame(Listener) {
                 frame: 0,
                 startFrame: 0,
                 endFrame: 3,
-                totalDalay: 80,
+                totalDalay: 60,
                 dalay: 0,
                 loop: true
             },
