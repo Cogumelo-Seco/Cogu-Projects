@@ -31,6 +31,7 @@ const page = (props) => {
                 document.getElementById('score').style.display = 'block'
                 document.getElementById('highScoreTitle').style.display = 'block'
                 document.getElementById('highScore').style.display = 'block'
+                document.getElementById('level').style.display = 'block'
 
                 setTimeout(() => game.start({
                     Listener,
@@ -67,10 +68,12 @@ const page = (props) => {
                             <li id="score">0</li>
                             <li id="highScoreTitle">HIGH SCORE</li>
                             <li id="highScore">0</li>
+                            <li id="level">Level 0</li>
                         </ul>
                         <canvas id="gameCanvas" />
                         <ul id="gameHUD2">
                             <li id="lifes" />
+                            <li id="codesUsed">Codes 0</li>
                         </ul>
                     </div>
 

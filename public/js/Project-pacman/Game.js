@@ -1,9 +1,11 @@
 function createGame(Listener) {
     const state = {
         fps: '0-0',
-        lifes: 2,
+        lifes: 3,
         highScore: 0,
         score: 0,
+        level: 1,
+        codes: 0,
         gameStage: 'loading',
         pacManStyle: 'default',
         pacManKills: 0,
@@ -93,8 +95,8 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 175,
-                speed: 175,
+                defaultSpeed: 180,
+                speed: 180,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -112,14 +114,14 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 180,
-                speed: 180,
+                defaultSpeed: 185,
+                speed: 185,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
-                intelligencePercent: 25,
+                intelligencePercent: 75,
                 id: 6
             },
             {
@@ -138,7 +140,7 @@ function createGame(Listener) {
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
-                intelligencePercent: 75,
+                intelligencePercent: 25,
                 id: 7
             },
             {
@@ -258,6 +260,7 @@ function createGame(Listener) {
         dots += state.ghosts.filter(g => g.oldMap == 0).length
 
         if (dots <= 0 && state.gameStage != 'levelWon') {
+            state.level += 1
             state.song?.pause()
             state.pauseMovement = true
             state.gameStage = 'levelWon'
@@ -266,7 +269,7 @@ function createGame(Listener) {
         
         if (!state.pauseMovement && state.gameStage != 'pause') {
             if (state.pacMan.pacManSpeedCounter <= +new Date()) {
-                state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed
+                state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed/(1+state.level/10)
                 movePacMan({
                     Listener: Listener,
                     direction: Listener.state.direction,
@@ -286,6 +289,7 @@ function createGame(Listener) {
                     if (code == true) codeMessage.innerText = 'Cheat activated'
                     if (code == false) codeMessage.innerText = 'Cheat disabled'
                     if (typeof code == 'string') codeMessage.innerText = code
+                    if (code != false) state.codes += 1
                     codeMessage.style.display = 'block'
                     time = codeMessage.innerText.length*200
                     if (state.codesTimeout) clearTimeout(state.codesTimeout)
@@ -320,9 +324,9 @@ function createGame(Listener) {
             state.gameLoopFPSControlTime = +new Date()
 
             for (let ghost of state.ghosts) {
-                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/ghost.speed*(state.canvas.tileSize/2-2)
+                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/(ghost.speed/(1+state.level/10))*(state.canvas.tileSize/2-2)
             }
-            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed)*(state.canvas.tileSize/2-2)
+            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed/(1+state.level/10))*(state.canvas.tileSize/2-2)
 
             for (let i in state.animations) {
                 let animation = state.animations[i]

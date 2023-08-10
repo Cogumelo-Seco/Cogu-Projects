@@ -96,12 +96,14 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
                 state.pauseMovement = true
                 state.gameStage = 'home'
                 state.highScore = 0
+                state.level = 1
                 state.gameGlitchedStage = 1
                 resetGame([ true, true ])
 
                 document.getElementById('score').style.display = 'none'
                 document.getElementById('highScoreTitle').style.display = 'none'
                 document.getElementById('highScore').style.display = 'none'
+                document.getElementById('level').style.display = 'none'
             }, 5000)
         }
     }

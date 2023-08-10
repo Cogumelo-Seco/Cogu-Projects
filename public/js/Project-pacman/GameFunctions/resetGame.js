@@ -67,7 +67,7 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         //state.map = JSON.parse(JSON.stringify(state.defaultMap))
         state.start('reset')
 
-        state.lifes = 2
+        state.lifes = 3
         state.score = 0
     }
 

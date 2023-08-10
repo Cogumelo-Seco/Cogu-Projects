@@ -117,12 +117,27 @@ li#score {
     bottom: 5px;
 }
 
+li#level {
+    display: none;
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+}
+
 img.pacmanLife {
     position: absolute;
     bottom: 2.5px;
     width: 20px;
     height: 20px;
     transform: rotateZ(180deg);
+}
+
+li#codesUsed {
+    display: none;
+    position: absolute;
+    bottom: 2.5px;
+    right: 5px;
+    color: red;
 }
 
 div#mobileButtonsContaner {

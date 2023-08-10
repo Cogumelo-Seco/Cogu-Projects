@@ -52,7 +52,7 @@ export default (state, checkPacManDeath) => {
         }
 
         if (state.ghosts[i].speedCounter <= +new Date()) {
-            state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed
+            state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed/(1+state.level/10)
 
             state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
 
