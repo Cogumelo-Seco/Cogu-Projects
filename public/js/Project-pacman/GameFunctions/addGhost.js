@@ -1,4 +1,4 @@
-export default (state, Listener, [ name, id, activeAnimation, speed ]) => {
+export default (state, Listener, [ name, id, activeAnimation, speed, intelligencePercent ]) => {
     state.ghosts.push({
         color: name,
         animDirection: 'up',
@@ -17,6 +17,7 @@ export default (state, Listener, [ name, id, activeAnimation, speed ]) => {
         locked: 0,
         oldTile: 3,
         dalay: 0,
+        intelligencePercent,
         id
     })
 }

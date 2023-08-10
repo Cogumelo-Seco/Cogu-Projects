@@ -5,15 +5,18 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         let lineY = null
 
         for (let y in state.map) {
-            if (state.map[y].includes(ghostId)) {
+            if (state.map[y].find(t => t?.type == ghostId)) {
                 for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
-                state.map[y] = state.map[y].filter(i => Number(i) >= 0 && Number(i) <= 20)
+                state.map[y] = state.map[y].filter(t => Number(t.type) >= 0 && Number(t.type) <= 20)
                 lineY = Number(y)
-                lineX = state.map[y].indexOf(ghostId)
+                lineX = state.map[y].indexOf(state.map[y].find(t => t?.type == ghostId))
             }
         }
 
-        if (lineX != null && lineY != null) state.map[lineY][lineX] = state.ghosts[i].oldTile
+        if (state.scaredAlways) state.ghosts[i].scared = false
+        state.ghosts[i].speed = state.ghosts[i].defaultSpeed
+        state.ghosts[i].death = false
+        if (lineX != null && lineY != null) state.map[lineY][lineX].type = state.ghosts[i].oldTile
     }
 
     let removePacManCount = 0
@@ -21,15 +24,15 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         let pacManLineX = null
         let pacManLineY = null
         for (let y in state.map) {
-            if (state.map[y].includes(9)) {
+            if (state.map[y].find(t => t?.type == 9)) {
                 pacManLineY = Number(y)
-                pacManLineX = state.map[y].indexOf(9)
+                pacManLineX = state.map[y].indexOf(state.map[y].find(t => t?.type == 9))
             }
         }
 
         if (pacManLineY != null && pacManLineX != null) {
-            state.map[pacManLineY][pacManLineX] = 3
-            state.map[16][10] = 9
+            state.map[pacManLineY][pacManLineX].type = 3
+            state.map[16][10].type = 9
             clearInterval(removePacManinterval)
         }
         else {
@@ -38,10 +41,10 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         }
     }, 100)
 
-    state.map[9][10] = 5
-    state.map[10][9] = 8
-    state.map[10][10] = 7
-    state.map[10][11] = 6
+    state.map[9][10].type = 5
+    state.map[10][9].type = 8
+    state.map[10][10].type = 7
+    state.map[10][11].type = 6
 
     for (let i in state.ghosts) {
         let ghost = state.ghosts[i]
@@ -61,31 +64,8 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
     }
 
     if (resetAll) {
-        /*state.map = [
-            [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 ],
-            [ 1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1 ],
-            [ 1,2,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,2,1 ],
-            [ 1,0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,0,1 ],
-            [ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 ],
-            [ 1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,0,1 ],
-            [ 1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1 ],
-            [ 1,1,1,1,1,0,1,1,1,3,1,3,1,1,1,0,1,1,1,1,1 ],
-            [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],
-            [ 1,1,1,1,1,0,1,3,1,1,5,1,1,3,1,0,1,1,1,1,1 ],
-            [ 3,3,3,3,3,0,3,3,1,8,7,6,1,3,3,0,3,3,3,3,3 ],
-            [ 1,1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1,1 ],
-            [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],
-            [ 1,1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1,1 ],
-            [ 1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1 ],
-            [ 1,0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,0,1 ],
-            [ 1,2,0,0,1,0,0,0,0,0,9,0,0,0,0,0,1,0,0,2,1 ],
-            [ 1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,1,1 ],
-            [ 1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1 ],
-            [ 1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1 ],
-            [ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 ],
-            [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 ],
-        ]*/
-        state.map = JSON.parse(JSON.stringify(state.defaultMap))
+        //state.map = JSON.parse(JSON.stringify(state.defaultMap))
+        state.start('reset')
 
         state.lifes = 2
         state.score = 0

@@ -1,6 +1,6 @@
 export default async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
-
+/*
     let tileSize = game.state.canvas.tileSize
 
     for (let i in game.state.ghosts) {
@@ -29,5 +29,5 @@ export default async (canvas, game, Listener) => {
             if (game.state.lowMode) ctx.fillRect(ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize)
             else ctx.drawImage(ghostImageConfig.image, ghostImagePos.x, ghostImagePos.y, ghostImagePos.width, ghostImagePos.height, ghost.placeOfDeath.x, ghost.placeOfDeath.y, tileSize, tileSize);
         }
-    }
+    }*/
 }

@@ -1,17 +1,51 @@
 export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
     let ghost = state.ghosts.find(g => g.id == ghostId)
-    state.pauseMovement = true
 
     if (ghostId != true && ghost.scared) {
-        state.morePoints.points = Math.floor(state.morePoints.oldPoints < 10000 ? state.morePoints.oldPoints*2 : state.morePoints.oldPoints)
-        state.morePoints.oldPoints = state.morePoints.points
-        addPoints(state.morePoints.points)
+        if (!ghost.death) {
+            state.pauseMovement = true
 
-        state.morePoints.time = +new Date()+2500
-        state.morePoints.lineX = lineX
-        state.morePoints.lineY = lineY
+            state.morePoints.points = Math.floor(state.morePoints.oldPoints < 10000 ? state.morePoints.oldPoints*2 : state.morePoints.oldPoints)
+            state.morePoints.oldPoints = state.morePoints.points
+            addPoints(state.morePoints.points)
 
-        let removeGhostAndAddPacManCount = 0
+            state.morePoints.time = +new Date()+2500
+            state.morePoints.lineX = lineX
+            state.morePoints.lineY = lineY
+
+            setTimeout(() => state.pauseMovement = false, 1000)
+            state.pacManKills += 1000
+
+            state.playSong('deathGhost.mp3')
+            
+            if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
+            state.playeMusic2Timeout = setTimeout(() => {
+                if (state.gameStage == 'game') {
+                    state.playSong('music2.mp3', { loop: true, volume: 0.3 })
+                }
+            }, 5000)
+        }
+
+        let ghostLineY = null
+        let ghostLineX = null
+        for (let y in state.map) {
+            if (state.map[y].find(t => t?.type == ghostId)) {
+                ghostLineY = Number(y)
+                ghostLineX = state.map[y].indexOf(state.map[y].find(t => t?.type == ghostId))
+            }
+        }
+
+        if (ghost) {
+            ghost.speed = ghost.defaultSpeed/2
+            ghost.death = true
+            let addGhost = () => {
+                if ([ 0, 2, 3 ].includes(state.map[ghostLineY] ? state.map[ghostLineY][ghostLineX]?.type : null)) state.map[ghostLineY][ghostLineX].type = ghostId
+                else setTimeout(addGhost, 1000/20)
+            }
+            addGhost()
+        }
+
+        /*let removeGhostAndAddPacManCount = 0
         let removeGhostAndAddPacManinterval = setInterval(() => {
             let ghostLineY = null
             let ghostLineX = null
@@ -43,28 +77,10 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
                 removeGhostAndAddPacManCount += 1
                 if (removeGhostAndAddPacManCount >= 50) clearInterval(removeGhostAndAddPacManinterval)
             }
-        }, 100)
-
-        setTimeout(() => state.pauseMovement = false, 1000)
-        state.pacManKills += 1000
-
-        state.playSong('deathGhost.mp3')      
-
-        if (ghost) {
-            ghost.death = true
-            ghost.placeOfDeath = {
-                x: lineX*state.canvas.tileSize,
-                y: lineY*state.canvas.tileSize
-            }
-        }
-
-        if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
-        state.playeMusic2Timeout = setTimeout(() => {
-            if (state.gameStage == 'game') {
-                state.playSong('music2.mp3', { loop: true, volume: 0.3 })
-            }
-        }, 5000)
+        }, 100)*/
     } else {
+        state.pauseMovement = true
+
         state.playSong('death.mp3')
 
         state.pacMan.animate = false

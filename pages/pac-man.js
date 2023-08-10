@@ -18,7 +18,7 @@ const page = (props) => {
         const game = createGame(Listener);
 
         game.loading()
-        game.start()
+        game.start('reset')
 
         canvas.addEventListener('click', (a) => {
             if (

@@ -9,7 +9,7 @@ export default async (canvas, index, Listener, functions) => {
     ctx.fillRect(0, 150, canvas.width, 5)
 
     if (bestIndividual) {
-        let X = canvas.width*0.4+60
+        let X = canvas.width*0.4+50
         let Y = 150-bestIndividual.distance
         let individualWidth = bestIndividual.width
         let individualHeight = bestIndividual.height
@@ -108,12 +108,12 @@ export default async (canvas, index, Listener, functions) => {
             ctx.arc(neuralX+(neuronSize/2), neuralY+(neuronSize/2), neuronSize, 0, 2 * Math.PI)
             ctx.fill();
 
-            /*functions.fillText({
+            functions.fillText({
                 text: neuron.type,
                 x: neuralX+neuronSize+8,
                 y: neuralY+8,
                 add: 1
-            })*/
+            })
         }
 
         ctx.font = `bold 18px Arial`
@@ -135,29 +135,29 @@ export default async (canvas, index, Listener, functions) => {
         functions.fillText({
             style: 'white',
             text: `Pontuação: ${bestIndividual.score}`,
-            x: canvas.width*0.4+160,
-            y: 70,
+            x: canvas.width*0.4+140,
+            y: 50,
             add: 2
         })
         functions.fillText({
             style: 'white',
             text: `Pulos: ${bestIndividual.jumpCount}`,
-            x: canvas.width*0.4+160,
-            y: 90,
+            x: canvas.width*0.4+140,
+            y: 70,
             add: 2
         })
         functions.fillText({
             style: 'white',
             text: `Balões: ${bestIndividual.ballonCount}`,
-            x: canvas.width*0.4+160,
-            y: 110,
+            x: canvas.width*0.4+140,
+            y: 90,
             add: 2
         })
         functions.fillText({
             style: 'white',
             text: `Abaixadas: ${bestIndividual.downCount}`,
-            x: canvas.width*0.4+160,
-            y: 130,
+            x: canvas.width*0.4+140,
+            y: 110,
             add: 2
         })
     }

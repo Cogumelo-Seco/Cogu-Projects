@@ -93,13 +93,14 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 170,
+                defaultSpeed: 175,
                 speed: 175,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
+                intelligencePercent: 95,
                 id: 5
             },
             {
@@ -118,6 +119,7 @@ function createGame(Listener) {
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
+                intelligencePercent: 25,
                 id: 6
             },
             {
@@ -129,13 +131,14 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 185,
-                speed: 185,
+                defaultSpeed: 190,
+                speed: 190,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
+                intelligencePercent: 75,
                 id: 7
             },
             {
@@ -154,6 +157,7 @@ function createGame(Listener) {
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
+                intelligencePercent: 50,
                 id: 8
             }
         ],
@@ -169,6 +173,7 @@ function createGame(Listener) {
             [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],
             [ 1,1,1,1,1,0,1,3,1,1,5,1,1,3,1,0,1,1,1,1,1 ],
             [ 3,3,3,3,3,0,3,3,1,8,7,6,1,3,3,0,3,3,3,3,3 ],
+            //[ 3,3,3,3,3,0,3,3,1,0,0,0,1,3,3,0,3,3,3,3,3 ],
             [ 1,1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1,1 ],
             [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],
             [ 1,1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1,1 ],
@@ -181,7 +186,11 @@ function createGame(Listener) {
             [ 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 ],
             [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 ],
         ],
-        map: []
+        map: [],
+        mapInfo: {
+            traceId: 0,
+            traceCenterId: 0
+        }
     }
 
     const addImages = (command) => require('./GameFunctions/addImages').default(state)
@@ -200,9 +209,36 @@ function createGame(Listener) {
     const checkCollision = (command) => require('./GameFunctions/checkCollision').default(state, checkPacManDeath, addPoints, command)
     const codes = require('./GameFunctions/codes').default(state, checkPacManDeath, addGhost)
     state.Listener = Listener
+    state.start = start
 
     async function start(command) {
-        state.map = JSON.parse(JSON.stringify(state.defaultMap))
+        if (command == 'reset') {
+            let defaultMapData = JSON.parse(JSON.stringify(state.defaultMap))
+            state.map = []
+            for (let i in defaultMapData) {
+                state.map.push([])
+                for (let a in defaultMapData[i]) {
+                    state.map[i].push({ type: defaultMapData[i][a], distance: 0, distanceOfCenter: 0 })
+                }
+            }
+
+            function loopTile(row, column, traceCenterId, lastTileNumber) {
+                let tile = state.map[row] ? state.map[row][column] : null
+                if (tile && tile.type != 1 && tile.traceCenterId != traceCenterId) {
+                    setTimeout(() => {
+                        state.map[row][column].distanceOfCenter = lastTileNumber+1
+                        state.map[row][column].traceCenterId = traceCenterId
+                        if (state.map[row-1] && !isNaN(Number(state.map[row-1][column]?.distanceOfCenter))) loopTile(row-1, column, traceCenterId, state.map[row][column]?.distanceOfCenter)
+                        if (state.map[row+1] && !isNaN(Number(state.map[row+1][column]?.distanceOfCenter))) loopTile(row+1, column, traceCenterId, state.map[row][column]?.distanceOfCenter)
+                        if (!isNaN(Number(state.map[row][column-1]?.distanceOfCenter))) loopTile(row, column-1, traceCenterId, state.map[row][column]?.distanceOfCenter)
+                        if (!isNaN(Number(state.map[row][column+1]?.distanceOfCenter))) loopTile(row, column+1, traceCenterId, state.map[row][column]?.distanceOfCenter)
+                    })
+                }
+            }
+        
+            state.mapInfo.traceCenterId += 1
+            loopTile(10, 10, state.mapInfo.traceCenterId, 0)
+        }
 
         if (command?.startGame) {
             state.gameStage = 'game'
@@ -216,13 +252,13 @@ function createGame(Listener) {
         let dots = 0
         for (let y in state.map) {
             for (let x in state.map[y]) {
-                if (state.map[y][x] == 0 || state.map[y][x] == 2) dots += 1
+                if (state.map[y][x].type == 0 || state.map[y][x].type == 2) dots += 1
             }
         }
         dots += state.ghosts.filter(g => g.oldMap == 0).length
 
         if (dots <= 0 && state.gameStage != 'levelWon') {
-            state.song.pause()
+            state.song?.pause()
             state.pauseMovement = true
             state.gameStage = 'levelWon'
             setTimeout(() => resetGame([ true ]), 4000)                

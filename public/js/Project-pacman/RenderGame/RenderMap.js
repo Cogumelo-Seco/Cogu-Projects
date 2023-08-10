@@ -10,10 +10,10 @@ export default async (canvas, game, Listener, randomColor) => {
     
     for (let lineY in map) {
         for (let lineX in map[lineY]) {
-            let column = map[lineY][lineX]
+            let type = map[lineY][lineX].type
             lineY = Number(lineY)
             lineX = Number(lineX)
-            switch (column) {
+            switch (type) {
                 case 0:
                     ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
@@ -23,6 +23,9 @@ export default async (canvas, game, Listener, randomColor) => {
                         ctx.arc(x+(tileSize/2), y+(tileSize/2), game.state.gameGlitched ? Math.floor(Math.random()*6) : 5, 0, 2 * Math.PI)
                         ctx.fill();
                     }
+                    /*ctx.fillStyle = '#fff'
+                    ctx.font = `${tileSize/2}px Arial`
+                    ctx.fillText(map[lineY][lineX].distanceOfCenter || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distanceOfCenter || 0).width/2), y+tileSize/1.5)*/
                     break
                 case 1:
                     let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*3)+4 : 6
@@ -33,10 +36,10 @@ export default async (canvas, game, Listener, randomColor) => {
 
                     if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
                     else {
-                        if (map[lineY][lineX-1] != 1) ctx.fillRect(x, y, wallLineSize, tileSize)
-                        if (map[lineY][lineX+1] != 1) ctx.fillRect(x+tileSize-wallLineSize, y, wallLineSize, tileSize)
-                        if (!map[lineY-1] || map[lineY-1][lineX] != 1) ctx.fillRect(x, y, tileSize, wallLineSize)
-                        if (!map[lineY+1] || map[lineY+1][lineX] != 1) ctx.fillRect(x, y+tileSize-wallLineSize, tileSize, wallLineSize)
+                        if (map[lineY][lineX-1]?.type != 1) ctx.fillRect(x, y, wallLineSize, tileSize)
+                        if (map[lineY][lineX+1]?.type != 1) ctx.fillRect(x+tileSize-wallLineSize, y, wallLineSize, tileSize)
+                        if (!map[lineY-1] || map[lineY-1][lineX]?.type != 1) ctx.fillRect(x, y, tileSize, wallLineSize)
+                        if (!map[lineY+1] || map[lineY+1][lineX]?.type != 1) ctx.fillRect(x, y+tileSize-wallLineSize, tileSize, wallLineSize)
                     }
                     break
                 case 2:
@@ -51,6 +54,9 @@ export default async (canvas, game, Listener, randomColor) => {
                     }
                     break
                 case 3:
+                    /*ctx.fillStyle = '#fff'
+                    ctx.font = `${tileSize/2}px Arial`
+                    ctx.fillText(map[lineY][lineX].distanceOfCenter || 0, x+tileSize/2-(ctx.measureText(map[lineY][lineX].distanceOfCenter || 0).width/2), y+tileSize/1.5)
                     /*ctx.fillStyle = 'transparent'
                     ctx.fillRect(x, y, tileSize, tileSize)*/
                     break
@@ -106,11 +112,11 @@ export default async (canvas, game, Listener, randomColor) => {
                     }
                     break
                 default:
-                    if (ghostsIds.includes(column)) {
-                        let ghost = game.state.ghosts.find(g => g.id == column)
+                    if (ghostsIds.includes(type)) {
+                        let ghost = game.state.ghosts.find(g => g.id == type)
 
                         let ghostImageConfig = game.state.images[`ghosts/${ghost.color}/Ghost.png`]
-                        let ghostImagePos = ghostImageConfig?.animationConfig[ghost.scared ? 'scared' : ghost.animDirection][!ghost.scared ? game.state.animations.Ghost.frame : game.state.pacManKills-1800 <= +new Date() ? game.state.animations.Ghost.frame : 0]
+                        let ghostImagePos = ghostImageConfig?.animationConfig[ghost.death ? 'eyes' : ghost.scared ? 'scared' : ghost.animDirection][ghost.death ? 0 : !ghost.scared ? game.state.animations.Ghost.frame : game.state.pacManKills-1800 <= +new Date() ? game.state.animations.Ghost.frame : 0]
         
                         let ghostY = y
                         let ghostX = x

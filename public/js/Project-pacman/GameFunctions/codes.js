@@ -9,17 +9,17 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             return state.pacManStyle == 'guto' ? true : false
         },
         frog: function () {            
-            if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 11, false, 170 ])
+            if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 11, false, 170, 50 ])
             else return
             return true
         },        
         applecat: function () {
-            if (!state.ghosts.find(g => g.color == 'apple-cat')) addGhost([ 'apple-cat', 12, true, 160 ])
+            if (!state.ghosts.find(g => g.color == 'apple-cat')) addGhost([ 'apple-cat', 12, true, 160, 100 ])
             else return 
             return true
         },
         cogu: function () {
-            if (!state.ghosts.find(g => g.color == 'cogu')) addGhost([ 'cogu', 13, false, 140 ])
+            if (!state.ghosts.find(g => g.color == 'cogu')) addGhost([ 'cogu', 13, false, 140, 0 ])
             else return 
             return true
         },

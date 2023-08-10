@@ -1,4 +1,5 @@
-export default (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
+export default (state, checkPacManDeath, addPoints, [ tile, lineY, lineX ]) => {
+    let type = tile.type
     let ghostsIds = state.ghosts.map(g => g.id)
     if (ghostsIds.includes(type)) checkPacManDeath([ type, lineY, lineX ])
     
@@ -22,7 +23,7 @@ export default (state, checkPacManDeath, addPoints, [ type, lineY, lineX ]) => {
                 state.pacManKills = 0
                 state.morePoints.oldPoints = 100
                 for (let i in state.ghosts) {
-                    if (!state.scaredAlways) {
+                    if (!state.scaredAlways && !state.ghosts[i].death) {
                         state.ghosts[i].scared = false
                         state.ghosts[i].speed = state.ghosts[i].defaultSpeed
                     }
