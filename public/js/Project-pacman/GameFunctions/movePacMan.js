@@ -91,8 +91,9 @@ export default (state, checkCollision, command) => {
 
     function loopTile(row, column, traceId, lastTileNumber) {
         let tile = state.map[row] ? state.map[row][column] : null
-        if (tile && tile.type != 1 && tile.traceId != traceId) {
-            setTimeout(() => {
+        if (tile && [ 0, 2, 3 ].includes(tile.type) && tile.traceId != traceId) {
+            clearTimeout(state.pacMan.traceTimeout)
+            state.pacMan.traceTimeout = setTimeout(() => {
                 state.map[row][column].distance = lastTileNumber+1
                 state.map[row][column].traceId = traceId
                 if (state.map[row-1] && !isNaN(Number(state.map[row-1][column]?.distance))) loopTile(row-1, column, traceId, state.map[row][column]?.distance)

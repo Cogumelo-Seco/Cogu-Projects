@@ -306,13 +306,13 @@ function createGame(Listener) {
             Listener.state.keys.escape = false
         } else if (state.gameStage == 'pause') state.pacManKills += 1000
 
-        if (state.gameGlitched && state.gameStage != 'pause' && state.gameStage != 'home') {
+        if (state.gameGlitched && !state.pauseMovement && state.gameStage != 'pause' && state.gameStage != 'home') {
             let percent = Math.floor(Math.random()*100)
             if (percent >= 100-state.gameGlitchedStage) {
                 let x = Math.floor(Math.random()*state.map.length)
                 let y = Math.floor(Math.random()*state.map[x].length)
-                state.map[x][y] = Math.floor(Math.random()*20)
-                state.gameGlitchedStage += 0.15
+                state.map[x][y].type = Math.floor(Math.random()*20)
+                state.gameGlitchedStage += 0.1
             }
         }
 

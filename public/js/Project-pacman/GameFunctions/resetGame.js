@@ -13,7 +13,7 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
             }
         }
 
-        if (state.scaredAlways) state.ghosts[i].scared = false
+        if (!state.scaredAlways) state.ghosts[i].scared = false
         state.ghosts[i].speed = state.ghosts[i].defaultSpeed
         state.ghosts[i].death = false
         if (lineX != null && lineY != null) state.map[lineY][lineX].type = state.ghosts[i].oldTile

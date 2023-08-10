@@ -66,7 +66,7 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             if (state.gameStage != 'game') return
             for (let y in state.map) {
                 for (let x in state.map[y]) {
-                    if (state.map[y][x] == 0 || state.map[y][x] == 2) state.map[y][x] = 3
+                    if (state.map[y][x].type == 0 || state.map[y][x].type == 2) state.map[y][x].type  = 3
                 }
             }
             for (let ghost of state.ghosts) ghost.oldTile = 3

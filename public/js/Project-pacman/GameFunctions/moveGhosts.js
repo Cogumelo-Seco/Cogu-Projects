@@ -33,20 +33,22 @@ export default (state, checkPacManDeath) => {
         let lineY = null
 
         function newDirection(blockedDirection) {
-            let directions = []
-    
-            if (!blockedPlaces.includes(state.map[lineY-1] ? state.map[lineY-1][lineX]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'up')) directions.push({ tileInfo: state.map[lineY-1][lineX], direction: 'up' })
-            if (!blockedPlaces.includes(state.map[lineY+1] ? state.map[lineY+1][lineX]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'down')) directions.push({ tileInfo: state.map[lineY+1][lineX], direction: 'down' })
-            if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX-1]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'left')) directions.push({ tileInfo: state.map[lineY][lineX-1], direction: 'left' })
-            if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX+1]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'right')) directions.push({ tileInfo: state.map[lineY][lineX+1], direction: 'right' })
-            
-            if (state.ghosts[i].death) directions = directions.sort((a, b) => a.tileInfo?.distanceOfCenter-b.tileInfo?.distanceOfCenter)
-            else directions = directions.sort((a, b) => a.tileInfo?.distance-b.tileInfo?.distance)
+            try {
+                let directions = []
+        
+                if (!blockedPlaces.includes(state.map[lineY-1] ? state.map[lineY-1][lineX]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'up')) directions.push({ tileInfo: state.map[lineY-1][lineX], direction: 'up' })
+                if (!blockedPlaces.includes(state.map[lineY+1] ? state.map[lineY+1][lineX]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'down')) directions.push({ tileInfo: state.map[lineY+1][lineX], direction: 'down' })
+                if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX-1]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'left')) directions.push({ tileInfo: state.map[lineY][lineX-1], direction: 'left' })
+                if (!blockedPlaces.includes(state.map[lineY] ? state.map[lineY][lineX+1]?.type : null) && (state.ghosts[i].scared || blockedDirection != 'right')) directions.push({ tileInfo: state.map[lineY][lineX+1], direction: 'right' })
+                
+                if (state.ghosts[i].death) directions = directions.sort((a, b) => a.tileInfo?.distanceOfCenter-b.tileInfo?.distanceOfCenter)
+                else directions = directions.sort((a, b) => a.tileInfo?.distance-b.tileInfo?.distance)
 
-            if (state.ghosts[i].death) return directions[0]?.direction
-            else if (state.ghosts[i].scared && Math.floor(Math.random()*100) <= state.ghosts[i].intelligencePercent) return directions[directions.length-1]?.direction
-            else if (Math.floor(Math.random()*100) <= state.ghosts[i].intelligencePercent) return directions[0]?.direction
-            else return directions[Math.floor(Math.random() * directions.length)]?.direction
+                if (state.ghosts[i].death) return directions[0]?.direction
+                else if (state.ghosts[i].scared && Math.floor(Math.random()*100) <= state.ghosts[i].intelligencePercent) return directions[directions.length-1]?.direction
+                else if (Math.floor(Math.random()*100) <= state.ghosts[i].intelligencePercent) return directions[0]?.direction
+                else return directions[Math.floor(Math.random() * directions.length)]?.direction
+            } catch {}
         }
 
         if (state.ghosts[i].speedCounter <= +new Date()) {
