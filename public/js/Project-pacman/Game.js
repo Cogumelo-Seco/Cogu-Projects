@@ -100,7 +100,7 @@ function createGame(Listener) {
                 locked: 0,
                 oldTile: 3,
                 dalay: 0,
-                intelligencePercent: 95,
+                intelligencePercent: 90,
                 id: 5
             },
             {
