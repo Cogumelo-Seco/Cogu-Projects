@@ -68,7 +68,6 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         state.start('reset')
 
         state.lifes = 3
-        state.score = 0
     }
 
     state.pacMan.animate = false

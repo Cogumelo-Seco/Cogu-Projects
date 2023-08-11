@@ -61,8 +61,9 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
                 state.song.pause()
                 state.pauseMovement = true
                 state.gameStage = 'home'
-                state.highScore = 0
+                //state.highScore = 0
                 state.level = 1
+                state.score = 0
                 state.gameGlitchedStage = 1
                 resetGame([ true, true ])
 
