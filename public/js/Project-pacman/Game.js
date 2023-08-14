@@ -409,8 +409,6 @@ function createGame(Listener) {
                 })
                 img.addEventListener('error', (e) => {
                     loaded = true
-                    console.log(img.src)
-                    console.err(e)
                     newLoad('[ERROR] '+dir)
                 })
                 img.src = `/imgs/pac-man/${dir}`
