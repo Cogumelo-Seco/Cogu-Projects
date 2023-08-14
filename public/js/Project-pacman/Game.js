@@ -394,7 +394,10 @@ function createGame(Listener) {
                     loaded = true
                     newLoad(dir)
                 })
-                sound.addEventListener('error', (e) => newLoad('[ERROR] '+dir))
+                sound.addEventListener('error', (e) => {
+                    loaded = true
+                    newLoad('[ERROR] '+dir)
+                })
                 sound.src = `/sounds/pac-man/${dir}`
                 state.sounds[dir] = sound
             } else {
@@ -405,7 +408,10 @@ function createGame(Listener) {
                     loaded = true
                     newLoad(dir)
                 })
-                img.addEventListener('error',(e) => newLoad('[ERROR] '+dir))
+                img.addEventListener('error', (e) => {
+                    loaded = true
+                    newLoad('[ERROR] '+dir)
+                })
                 img.src = `/imgs/pac-man/${dir}`
                 img.id = dir
                 state.images[dir] = {
