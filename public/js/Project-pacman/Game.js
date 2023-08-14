@@ -95,15 +95,16 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 175,
-                speed: 175,
+                defaultSpeed: 185,
+                speed: 185,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 4,
+                defaultOldTile: 4,
                 dalay: 0,
                 intelligencePercent: 90,
-                originalPos: { x: 10, y: 9 },
+                defaultPos: { x: 10, y: 9 },
                 id: 10
             },
             {
@@ -115,15 +116,16 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 180,
-                speed: 180,
+                defaultSpeed: 190,
+                speed: 190,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
+                defaultOldTile: 3,
                 dalay: 0,
                 intelligencePercent: 75,
-                originalPos: { x: 11, y: 10 },
+                defaultPos: { x: 11, y: 10 },
                 id: 11
             },
             {
@@ -135,15 +137,16 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 185,
-                speed: 185,
+                defaultSpeed: 195,
+                speed: 195,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
+                defaultOldTile: 3,
                 dalay: 0,
                 intelligencePercent: 25,
-                originalPos: { x: 10, y: 10 },
+                defaultPos: { x: 10, y: 10 },
                 id: 12
             },
             {
@@ -155,15 +158,16 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 180,
-                speed: 180,
+                defaultSpeed: 190,
+                speed: 190,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
                 oldTile: 3,
+                defaultOldTile: 3,
                 dalay: 0,
                 intelligencePercent: 50,
-                originalPos: { x: 9, y: 10 },
+                defaultPos: { x: 9, y: 10 },
                 id: 13
             }
         ],

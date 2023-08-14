@@ -41,14 +41,12 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
     }, 100)
 
 
-    for (let ghost of state.ghosts) state.map[ghost.originalPos.y][ghost.originalPos.x].type = ghost.id
-
-    for (let i in state.ghosts) {
-        let ghost = state.ghosts[i]
+    for (let ghost of state.ghosts) {
+        state.map[ghost.defaultPos.y][ghost.defaultPos.x].type = ghost.id
+        ghost.oldTile = ghost.defaultOldTile
         ghost.animDirection = 'up'
         ghost.death = false
         ghost.locked = 0
-        ghost.oldTile = 3
         ghost.dalay = 0
     }
 
