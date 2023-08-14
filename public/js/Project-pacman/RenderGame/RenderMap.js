@@ -114,14 +114,9 @@ export default async (canvas, game, Listener, randomColor) => {
                     break
                 default:
                     if (fruitsIds.includes(type)) {
-                        let fruitImage = game.state.images[`fruits/${type-20}.png`]?.image
+                        let fruitImage = game.state.images[`Fruits/${type-20}.png`]?.image
 
-                        try {
-                            if (fruitImage) ctx.drawImage(fruitImage, x, y, tileSize, tileSize);
-                        } catch {
-                            ctx.fillStyle = 'red'
-                            ctx.fillRect(x, y, tileSize, tileSize)
-                        }
+                        if (fruitImage) ctx.drawImage(fruitImage, x, y, tileSize, tileSize);
                     } else if (ghostsIds.includes(type)) {
                         let ghost = game.state.ghosts.find(g => g.id == type)
 
