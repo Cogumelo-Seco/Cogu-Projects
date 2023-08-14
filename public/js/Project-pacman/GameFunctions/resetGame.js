@@ -6,8 +6,7 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
 
         for (let y in state.map) {
             if (state.map[y].find(t => t?.type == ghostId)) {
-                for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
-                state.map[y] = state.map[y].filter(t => Number(t.type) >= 0 && Number(t.type) <= 20)
+                //state.map[y] = state.map[y].filter(t => Number(t.type) >= 0 && Number(t.type) <= 20)
                 lineY = Number(y)
                 lineX = state.map[y].indexOf(state.map[y].find(t => t?.type == ghostId))
             }

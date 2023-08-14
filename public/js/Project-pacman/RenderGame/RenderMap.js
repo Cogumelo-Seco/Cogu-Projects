@@ -3,6 +3,7 @@ export default async (canvas, game, Listener, randomColor) => {
 
     let glitchedPercent = Math.floor(Math.random()*100)
     let ghostsIds = game.state.ghosts.map(g => g.id)
+    let fruitsIds = [ 20, 21, 22, 23, 24, 25, 26, 27 ]
     let tileSize = game.state.canvas.tileSize
     let map = game.state.map
     let x = 0
@@ -112,7 +113,11 @@ export default async (canvas, game, Listener, randomColor) => {
                     }
                     break
                 default:
-                    if (ghostsIds.includes(type)) {
+                    if (fruitsIds.includes(type)) {
+                        let fruitImage = game.state.images[`fruits/${type-20}.png`]?.image
+
+                        if (fruitImage) ctx.drawImage(fruitImage, x, y, tileSize, tileSize);
+                    } else if (ghostsIds.includes(type)) {
                         let ghost = game.state.ghosts.find(g => g.id == type)
 
                         let ghostImageConfig = game.state.images[`ghosts/${ghost.color}/Ghost.png`]

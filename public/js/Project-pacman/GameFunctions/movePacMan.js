@@ -5,7 +5,6 @@ export default (state, checkCollision, command) => {
 
     for (let y in state.map) {
         if (state.map[y].find(t => t?.type == 9)) {
-            for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
             if (lineX != null || lineY != null) state.map[Number(y)][state.map[Number(y)].indexOf(state.map[y].find(t => t?.type == 9))].type = 3
             else {
                 lineY = Number(y)
@@ -30,9 +29,7 @@ export default (state, checkCollision, command) => {
 
         if (!direction) return;
 
-        let notOldTile = state.ghosts.map(g => g.id)
-        notOldTile.push(0)
-        notOldTile.push(2)
+        let notOldTile = (state.ghosts.map(g => g.id)).concat([ 0, 2, 20, 21, 22, 23, 24, 25, 26, 27 ])
 
         if (direction == 'left' && lineX <= 0) {
             if (!notOldTile.includes(state.pacMan.oldTile)) state.map[lineY][lineX].type = state.pacMan.oldTile

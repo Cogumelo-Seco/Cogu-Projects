@@ -51,15 +51,15 @@ export default (state, checkPacManDeath) => {
             } catch {}
         }
 
+        state.ghosts[i].speed = state.ghosts[i].death ? state.ghosts[i].defaultSpeed/2 : state.ghosts[i].scared ? 400 : state.ghosts[i].defaultSpeed/(1+state.level/20)
         if (state.ghosts[i].speedCounter <= +new Date()) {
-            state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed/(1+state.level/10)
+            state.ghosts[i].speedCounter = +new Date()+state.ghosts[i].speed
 
             state.ghosts[i].animation = state.ghosts[i].animation ? false : true        
 
             for (let y in state.map) {
                 if (state.map[y].find(t => t?.type == ghostId)) {
-                    for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
-                    state.map[y] = state.map[y].filter(t => Number(t.type) >= 0 && Number(t.type) <= 20)
+                    //state.map[y] = state.map[y].filter(t => Number(t.type) >= 0 && Number(t.type) <= 20)
                     if (lineX != null || lineY != null) state.map[Number(y)][state.map[y].indexOf(state.map[y].find(t => t?.type == ghostId))].type = 3
                     else {
                         lineY = Number(y)
@@ -67,17 +67,6 @@ export default (state, checkPacManDeath) => {
                     }
                 }
             }
-/*
-            for (let y in state.map) {
-                if (state.map[y].find(t => t?.type == 9)) {
-                    for (let i = 21; i <= state.map[y].length; i++) delete state.map[y][i]
-                    if (lineX != null || lineY != null) state.map[Number(y)][state.map[Number(y)].indexOf(state.map[y].find(t => t?.type == 9))].type = 3
-                    else {
-                        lineY = Number(y)
-                        lineX = state.map[y].indexOf(state.map[y].find(t => t?.type == 9))
-                    }
-                }
-            }*/
 
             if (lineX != null || lineY != null) {
                 let direction = state.ghosts[i].direction

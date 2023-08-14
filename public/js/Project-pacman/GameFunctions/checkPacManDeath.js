@@ -36,7 +36,6 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
         }
 
         if (ghost) {
-            ghost.speed = ghost.defaultSpeed/2
             ghost.death = true
             let addGhost = () => {
                 if ([ 0, 2, 3 ].includes(state.map[ghostLineY] ? state.map[ghostLineY][ghostLineX]?.type : null)) state.map[ghostLineY][ghostLineX].type = ghostId

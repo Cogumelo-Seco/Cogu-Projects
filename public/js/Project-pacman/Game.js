@@ -95,8 +95,8 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 180,
-                speed: 180,
+                defaultSpeed: 175,
+                speed: 175,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -114,8 +114,8 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 185,
-                speed: 185,
+                defaultSpeed: 180,
+                speed: 180,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -133,8 +133,8 @@ function createGame(Listener) {
                     x: 0,
                     y: 0
                 },
-                defaultSpeed: 190,
-                speed: 190,
+                defaultSpeed: 185,
+                speed: 185,
                 speedCounter: 0,
                 death: false,
                 locked: 0,
@@ -191,7 +191,12 @@ function createGame(Listener) {
         map: [],
         mapInfo: {
             traceId: 0,
-            traceCenterId: 0
+            traceCenterId: 0,
+            fruit: 0,
+            fruitPos: {
+                x: 10,
+                y: 12
+            }
         }
     }
 
@@ -240,6 +245,7 @@ function createGame(Listener) {
         
             state.mapInfo.traceCenterId += 1
             loopTile(10, 10, state.mapInfo.traceCenterId, 0)
+            state.mapInfo.fruit = 0
         }
 
         if (command?.startGame) {
@@ -247,10 +253,15 @@ function createGame(Listener) {
             state.pauseMovement = false
 
             playSong('music2.mp3', { loop: true, volume: 0.3 })
+
+            let totalDots = 0
+            for (let i in state.defaultMap) totalDots += (state.defaultMap[i].filter(t => t == 0 || t == 2)).length
+            state.mapInfo.totalDots = totalDots
         }
     }
 
     function gameLoop() {
+        console.log(state.map[12][10])
         let dots = 0
         for (let y in state.map) {
             for (let x in state.map[y]) {
@@ -258,6 +269,7 @@ function createGame(Listener) {
             }
         }
         dots += state.ghosts.filter(g => g.oldMap == 0).length
+        state.mapInfo.dots = dots
 
         if (dots <= 0 && state.gameStage != 'levelWon') {
             state.level += 1
@@ -269,7 +281,7 @@ function createGame(Listener) {
         
         if (!state.pauseMovement && state.gameStage != 'pause') {
             if (state.pacMan.pacManSpeedCounter <= +new Date()) {
-                state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed/(1+state.level/10)
+                state.pacMan.pacManSpeedCounter = +new Date()+state.pacMan.pacManSpeed/(1+state.level/20)
                 movePacMan({
                     Listener: Listener,
                     direction: Listener.state.direction,
@@ -324,9 +336,9 @@ function createGame(Listener) {
             state.gameLoopFPSControlTime = +new Date()
 
             for (let ghost of state.ghosts) {
-                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/(ghost.speed/(1+state.level/10))*(state.canvas.tileSize/2-2)
+                if (ghost.dalay > 0) ghost.dalay -= state.canvas.tileSize/(ghost.speed/(1+state.level/20))*(state.canvas.tileSize/2-2)
             }
-            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed/(1+state.level/10))*(state.canvas.tileSize/2-2)
+            if (state.pacMan.dalay > 0) state.pacMan.dalay -= state.canvas.tileSize/(state.pacMan.pacManSpeed/(1+state.level/20))*(state.canvas.tileSize/2-2)
 
             for (let i in state.animations) {
                 let animation = state.animations[i]

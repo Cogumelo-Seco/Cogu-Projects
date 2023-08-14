@@ -13,6 +13,15 @@ export default async (state) => {
         { dir: 'ghosts/frog/Ghost.png', animationConfigDir: 'ghosts/frog/Ghost.json' },
         { dir: 'ghosts/cogu/Ghost.png', animationConfigDir: 'ghosts/cogu/Ghost.json' },
         { dir: 'ghosts/apple-cat/Ghost.png', animationConfigDir: 'ghosts/apple-cat/Ghost.json' },
+
+        { dir: 'fruits/0.png' },
+        { dir: 'fruits/1.png' },
+        { dir: 'fruits/2.png' },
+        { dir: 'fruits/3.png' },
+        { dir: 'fruits/4.png' },
+        { dir: 'fruits/5.png' },
+        { dir: 'fruits/6.png' },
+        { dir: 'fruits/7.png' },
     ]
     
     return state.images.length
