@@ -261,7 +261,6 @@ function createGame(Listener) {
     }
 
     function gameLoop() {
-        console.log(state.map[12][10])
         let dots = 0
         for (let y in state.map) {
             for (let x in state.map[y]) {
@@ -410,6 +409,8 @@ function createGame(Listener) {
                 })
                 img.addEventListener('error', (e) => {
                     loaded = true
+                    console.log(img.src)
+                    console.err(e)
                     newLoad('[ERROR] '+dir)
                 })
                 img.src = `/imgs/pac-man/${dir}`
