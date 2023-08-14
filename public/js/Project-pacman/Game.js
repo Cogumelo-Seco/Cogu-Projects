@@ -100,10 +100,11 @@ function createGame(Listener) {
                 speedCounter: 0,
                 death: false,
                 locked: 0,
-                oldTile: 3,
+                oldTile: 4,
                 dalay: 0,
                 intelligencePercent: 90,
-                id: 5
+                originalPos: { x: 10, y: 9 },
+                id: 10
             },
             {
                 color: 'pink',
@@ -122,7 +123,8 @@ function createGame(Listener) {
                 oldTile: 3,
                 dalay: 0,
                 intelligencePercent: 75,
-                id: 6
+                originalPos: { x: 11, y: 10 },
+                id: 11
             },
             {
                 color: 'orange',
@@ -141,7 +143,8 @@ function createGame(Listener) {
                 oldTile: 3,
                 dalay: 0,
                 intelligencePercent: 25,
-                id: 7
+                originalPos: { x: 10, y: 10 },
+                id: 12
             },
             {
                 color: 'cyan',
@@ -160,7 +163,8 @@ function createGame(Listener) {
                 oldTile: 3,
                 dalay: 0,
                 intelligencePercent: 50,
-                id: 8
+                originalPos: { x: 9, y: 10 },
+                id: 13
             }
         ],
         defaultMap: [
@@ -173,8 +177,8 @@ function createGame(Listener) {
             [ 1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1 ],
             [ 1,1,1,1,1,0,1,1,1,3,1,3,1,1,1,0,1,1,1,1,1 ],
             [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],
-            [ 1,1,1,1,1,0,1,3,1,1,5,1,1,3,1,0,1,1,1,1,1 ],
-            [ 3,3,3,3,3,0,3,3,1,8,7,6,1,3,3,0,3,3,3,3,3 ],
+            [ 1,1,1,1,1,0,1,3,1,1,10,1,1,3,1,0,1,1,1,1,1 ],
+            [ 3,3,3,3,3,0,3,3,1,13,12,11,1,3,3,0,3,3,3,3,3 ],
             //[ 3,3,3,3,3,0,3,3,1,0,0,0,1,3,3,0,3,3,3,3,3 ],
             [ 1,1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1,1 ],
             [ 3,3,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,3,3 ],

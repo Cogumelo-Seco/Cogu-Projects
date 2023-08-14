@@ -61,6 +61,10 @@ export default async (canvas, game, Listener, randomColor) => {
                     /*ctx.fillStyle = 'transparent'
                     ctx.fillRect(x, y, tileSize, tileSize)*/
                     break
+                case 4:
+                    ctx.fillStyle = '#ffceff'
+                    ctx.fillRect(x, y+(tileSize/2)-(tileSize/8/2), tileSize, tileSize/8)
+                    break
                 case 9:
                     let pacManImageConfig = game.state.images[`PacMan/${game.state.pacManStyle}/PacMan.png`]
                     let pacManImagePos = pacManImageConfig.animationConfig[game.state.animations.pacMan.frame]

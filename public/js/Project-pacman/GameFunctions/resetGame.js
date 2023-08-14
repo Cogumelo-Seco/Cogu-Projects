@@ -40,10 +40,8 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         }
     }, 100)
 
-    state.map[9][10].type = 5
-    state.map[10][9].type = 8
-    state.map[10][10].type = 7
-    state.map[10][11].type = 6
+
+    for (let ghost of state.ghosts) state.map[ghost.originalPos.y][ghost.originalPos.x].type = ghost.id
 
     for (let i in state.ghosts) {
         let ghost = state.ghosts[i]
