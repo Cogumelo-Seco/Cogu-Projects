@@ -111,7 +111,10 @@ function create(Listener, canvas,) {
                 Y: 3//Math.floor(Math.random()*19)
             },*/
             numberOfIndividuals: 1000,
-            individuals: {
+            individual: {
+                X: 6,
+                Y: 18,
+                trace: []
             },
             endObject: {
                 X: 3,//Math.floor(Math.random()*19),
@@ -135,38 +138,70 @@ function create(Listener, canvas,) {
             }
         }
         
+        let endObject = state.mapInfo.endObject
+        let startObject = state.mapInfo.startObject
+        function loopTile(tile, distance) {
+            if (tile && tile.renderId != String(state.mapInfo.renderId)) {
+                tile.distanceValue = tile.type == 'air' ? distance : Infinity
+                tile.renderId = String(state.mapInfo.renderId)
+                state.mapInfo.maped += 1
+
+                try {
+                    if (tile.type == 'air' && state.mapInfo.render) {
+                        setTimeout(() => {
+                            if (state.mapInfo.mapData[tile.Y+1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y+1][tile.X], distance+1)
+                            if (state.mapInfo.mapData[tile.Y-1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y-1][tile.X], distance+1)
+                            if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X+1], distance+1)
+                            if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X-1], distance+1)
+                        }, 0)
+                    }
+
+                    //if (!isNaN(state.mapInfo.mapData[startObject.Y][startObject.X].distanceValue)) state.mapInfo.render = false
+                } catch {}
+            }
+        }
+        loopTile(state.mapInfo.mapData[endObject.Y][endObject.X], 0)
 
         /* !!!!!!! FPS LIMITADO !!!!!!! */
 
-        if (state.LoopFPSControlTime+0 <= +new Date()) {
+        if (state.LoopFPSControlTime+100 <= +new Date()) {
             state.LoopFPSControlTime = +new Date()
             state.rainbowColor += 1
 
-            let endObject = state.mapInfo.endObject
-            let startObject = state.mapInfo.startObject
-            function loopTile(tile, distance) {
-                if (tile && tile.renderId != String(state.mapInfo.renderId)) {
-                    tile.distanceValue = tile.type == 'air' ? distance : Infinity
-                    tile.renderId = String(state.mapInfo.renderId)
-                    state.mapInfo.maped += 1
+            let individualData = state.mapInfo.individual
+            let directions = ([
+                state.mapInfo.mapData[individualData.Y-1] ? Object.assign(state.mapInfo.mapData[individualData.Y-1][individualData.X], { direction: 'up' }) || null : null,
+                state.mapInfo.mapData[individualData.Y+1] ? Object.assign(state.mapInfo.mapData[individualData.Y+1][individualData.X], { direction: 'down' }) || null : null,
+                state.mapInfo.mapData[individualData.Y] ? Object.assign(state.mapInfo.mapData[individualData.Y][individualData.X+1], { direction: 'right' }) || null : null,
+                state.mapInfo.mapData[individualData.Y] ? Object.assign(state.mapInfo.mapData[individualData.Y][individualData.X-1], { direction: 'left' }) || null : null
+            ].filter((b) => b.type == 'air')).sort((a, b) => a.distanceValue-b.distanceValue)
 
-                    try {
-                        if (tile.type == 'air' && state.mapInfo.render) {
-                            setTimeout(() => {
-                                if (state.mapInfo.mapData[tile.Y+1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y+1][tile.X], distance+1)
-                                if (state.mapInfo.mapData[tile.Y-1] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y-1][tile.X], distance+1)
-                                if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X+1], distance+1)
-                                if (state.mapInfo.mapData[tile.Y] && tile.renderId == String(state.mapInfo.renderId)) loopTile(state.mapInfo.mapData[tile.Y][tile.X-1], distance+1)
-                            }, 0)
-                        }
+            directions = directions.filter((b) => b.distanceValue == directions[0].distanceValue && directions[0].distanceValue > 0)
+            let direction = directions[Math.floor(Math.random()*directions.length)]?.direction
 
-                        //if (!isNaN(state.mapInfo.mapData[startObject.Y][startObject.X].distanceValue)) state.mapInfo.render = false
-                    } catch {}
-                }
+            if (!individualData.trace.find(t => t.X == individualData.X && t.Y == individualData.Y)) individualData.trace.push({ X: individualData.X, Y: individualData.Y })
+
+            switch (direction) {
+                case 'up':
+                    individualData.Y -= 1
+                    break
+                case 'down':
+                    individualData.Y += 1
+                    break
+                case 'left':
+                    individualData.X -= 1
+                    break
+                case 'right':
+                    individualData.X += 1
+                    break
             }
-            loopTile(state.mapInfo.mapData[endObject.Y][endObject.X], 0)
 
-            for (let i = 0;i <= state.mapInfo.numberOfIndividuals;i++) {
+            /*let directions = []
+
+            let a = [30, 5, 5, 10, 15 , 20].sort(function(a,b) {return a-b})
+            return a.filter(function(b) {return b==a[0]})
+
+            /*for (let i = 0;i <= state.mapInfo.numberOfIndividuals;i++) {
                 let individual = state.mapInfo.individuals[i]
                 if (!individual) {
                     state.mapInfo.individuals[i] = {
@@ -226,7 +261,7 @@ function create(Listener, canvas,) {
                             Math.floor(Math.random()*2000)-1000,
                             Math.floor(Math.random()*2000)-1000,
                             Math.floor(Math.random()*2000)-1000,
-                            Math.floor(Math.random()*2000)-1000,*/
+                            Math.floor(Math.random()*2000)-1000,
                         ]
                     }
                 } else {
@@ -280,7 +315,7 @@ function create(Listener, canvas,) {
                                 individual.distanceValue = state.mapInfo.mapData[individual.Y][individual.X].distanceValue
                                 break
                             }
-                        }*/
+                        }
                     }
                 }
             }
@@ -291,7 +326,7 @@ function create(Listener, canvas,) {
                 let bestIndividual = (Object.values(state.mapInfo.individuals).filter(i => i.energy <= 0))//.sort((a, b) => a?.distanceValue-b?.distanceValue)[0]
                 /*for (let i in bestIndividual) {
                     bestIndividual[i].distanceValue = state.mapInfo.mapData[bestIndividual[i].Y][bestIndividual[i].X].distanceValue
-                }*/
+                }
                 bestIndividual = bestIndividual.sort((a, b) => a.distanceValue-b.distanceValue)//[0]
                 if (bestIndividual[0].distanceValue == bestIndividual[1].distanceValue) bestIndividual = bestIndividual[1]
                 else bestIndividual = bestIndividual[0]
@@ -326,13 +361,13 @@ function create(Listener, canvas,) {
                         }
                         /*
                         data = bestIndividual.data[a]+Math.floor(Math.random()*600)-(300)
-                        data = data <= -1000 ? -1000 : data >= 1000 ? 1000 : data*/
+                        data = data <= -1000 ? -1000 : data >= 1000 ? 1000 : data
                     }
                     /*for (let a in state.mapInfo.individuals[i].data2) {
                         let data = state.mapInfo.individuals[i].data2[a]
                         data = bestIndividual.data[a]+Math.floor(Math.random()*600)-(300)
                         data = data <= -1000 ? -1000 : data >= 1000 ? 1000 : data
-                    }*/
+                    }
                     
                     //for (let a in state.mapInfo.individuals[i].data) state.mapInfo.individuals[i].data[a] = state.mapInfo.individuals[i].data[a] <= -1000 ? -1000 : state.mapInfo.individuals[i].data[a] >= 1000 ? 1000 : state.mapInfo.individuals[i].data[a]
                 }
@@ -373,9 +408,8 @@ function create(Listener, canvas,) {
                             ]
                         }
                     }
-                }*/
+                }
             }
-/*
             let tiles = []
             if (state.mapInfo.mapData[startObject.Y+1] && state.mapInfo.mapData[startObject.Y+1][startObject.X]) tiles.push(state.mapInfo.mapData[startObject.Y+1][startObject.X])
             if (state.mapInfo.mapData[startObject.Y-1] && state.mapInfo.mapData[startObject.Y-1][startObject.X]) tiles.push(state.mapInfo.mapData[startObject.Y-1][startObject.X])

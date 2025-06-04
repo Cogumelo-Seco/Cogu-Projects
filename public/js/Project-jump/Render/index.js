@@ -7,8 +7,8 @@ export default async function render(canvas, index, Listener) {
     index.state.fps = `${Number(index.state.fps.split('-')[0]) + 1}-${index.state.fps.split('-')[1]}`
 
     canvas.style.filter = index.state.screenFilter
-    canvas.width = window.innerWidth//+(index.state.screenZoom/2)
-    canvas.height = window.innerHeight//+(index.state.screenZoom/2)
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
     canvas.style.backgroundImage = 'none'
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)

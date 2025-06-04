@@ -10,7 +10,7 @@ function create(Listener, canvas) {
         scoresArr: [ 0 ],
         generation: 0,
         alive: 0,
-        numberOfIndividuals: 2000,
+        numberOfIndividuals: 1000,
         individuals: {},
         mapObjects: [],
         testTimeStart: +new Date(),
@@ -184,13 +184,10 @@ function create(Listener, canvas) {
                     ]
                 }
             } else if (!individual.dead) {
-
-                // Aceleração
                 let a = 15 * (10 ** (-2))
                 let getNewDistance = (S0, v, t) => S0 + v*t + 0.5 * (a*t)**2
 
-                let timeGap = 1//+new Date()-individual.time
-                //individual.time = +new Date()
+                let timeGap = 1
                 individual.distance = Math.min(Math.max(getNewDistance(individual.distance, individual.v, timeGap), 0), 100)
                 individual.v = individual.distance <= 0 ? 0 : individual.v - (a * timeGap)
 
@@ -200,7 +197,7 @@ function create(Listener, canvas) {
                 )) individual.dead = true
 
                 if (individual.ballon) {
-                    individual.ballonTime += state.speed//state.speed*0.2
+                    individual.ballonTime += state.speed
                     if (individual.ballonTime >= state.speed*100+50) {
                         individual.ballon = false
                         individual.distance = 55
@@ -213,15 +210,14 @@ function create(Listener, canvas) {
                 individual.score = state.score-(individual.jumpCount*10)
 
                 for (let a in individual.data) {
-                    if (!individual.dataValue3[a]) individual.dataValue3[a] = { type: null, value: false}
-                    //else individual.dataValue3[a].value = false
-                    //individual.dataValue3 = {0: { type: 'Balão', value: true }}
+                    if (!individual.dataValue3[a]) individual.dataValue3[a] = { type: null, value: 0 }
 
                     let dataValue = 0
                     let object = (state.mapObjects.filter(o => o.X >= individual.X+individual.width)).sort((a, b) => a.X-b.X)[0]
 
                     if (object) {
                         for (let b in individual.data[a]) {
+                            individual.dataValue2[a+'-'+b] = individual.data[a][b]
                             if (b == 0) {
                                 individual.dataValue1[b].value = Math.abs(object.X-individual.X)
                                 dataValue += individual.data[a][b]*Math.abs(object.X-individual.X)
@@ -244,15 +240,29 @@ function create(Listener, canvas) {
                             }
                         }
 
-                        individual.dataValue2[a] = dataValue
+                        individual.dataValue3[a].value = dataValue
+                        for (let i = 0;i <= 2;i++) {
+                            switch (i) {
+                                case 0:
+                                    individual.dataValue3[0].type = 'Abaixar'
+                                    break;
+                                case 1:
+                                    individual.dataValue3[1].type = 'Balão'
+                                    break;
+                                case 2:
+                                    individual.dataValue3[2].type = 'Pulo'
+                                    break;
+                            }
+                        }
 
+                        /*
                         individual.dataValue3[0].type = 'Abaixar'
                         individual.dataValue3[1].type = 'Balão'
-                        individual.dataValue3[2].type = 'Pulo'
+                        individual.dataValue3[2].type = 'Pulo'*/
 
                         if (a == 0 && +new Date()-individual.downRechargeTime >= 1000 && !individual.ballon && Math.abs(individual.v) == 0) {
                             if (dataValue > 0 /*&& !individual.down*/) {
-                                individual.dataValue3[0].value = true
+                                //individual.dataValue3[0].value = true
                                 individual.downRechargeTime = +new Date()
                                 individual.down = true
                                 individual.height = individual.size/1.5
@@ -260,26 +270,26 @@ function create(Listener, canvas) {
                                 individual.v = 0
                                 individual.distance = 0
                             } else {
-                                individual.dataValue3[0].value = false
+                                //individual.dataValue3[0].value = false
                                 individual.down = false
                                 individual.height = individual.size
                             }
-                        } else if (a == 0 && dataValue < 0) individual.dataValue3[0].value = false
+                        } //else if (a == 0 && dataValue < 0) individual.dataValue3[0].value = false
 
                         if (a == 1 && dataValue > 0 && !individual.down && !individual.ballon && individual.ballonRechargeTime <= 0 && Math.abs(individual.v) == 0) {
-                            individual.dataValue3[1].value = true
+                            //individual.dataValue3[1].value = true
                             individual.ballon = true
                             individual.ballonTime = 0
                             individual.ballonCount += 1
                             individual.v = 0
-                        } else if (a == 1 && dataValue < 0) individual.dataValue3[1].value = false
+                        } //else if (a == 1 && dataValue < 0) individual.dataValue3[1].value = false
 
                         if (a == 2 && dataValue > 0 && Math.abs(individual.v) == 0 && !individual.ballon && !individual.down) {
-                            individual.dataValue3[2].value = true
+                            //individual.dataValue3[2].value = true
                             individual.jumpCount += 1
                             individual.v = individual.jumpForce
                             individual.height = individual.size
-                        } else if (a == 2 && dataValue < 0) individual.dataValue3[2].value = false
+                        } //else if (a == 2 && dataValue < 0) individual.dataValue3[2].value = false
 
                         individual.score = state.score-(individual.jumpCount*5)-(individual.ballonCount*2)-(individual.downCount*2)
                     }
@@ -342,19 +352,6 @@ function create(Listener, canvas) {
 
         const completeLoading = () => {
             state.loading.msg = `(${state.loading.loaded}/${state.loading.total}) 100% - Complete loading`
-            /*if (state.gameStage == 'loading') {
-                let interval = setInterval(() => {
-                    if (!state.inLogin) {
-                        state.animations.loadingLogo.paused = false
-
-                        if (state.animations.loadingLogo.frame >= state.animations.loadingLogo.endFrame) {
-                            clearInterval(interval)
-                            state.animations.loadingLogo.paused = true
-                            state.smallFunctions.redirectGameStage('menu')
-                        }
-                    }
-                }, 1000)
-            }*/
         }
 
         const load = async({ dir, animationConfigDir}) => {
@@ -384,7 +381,6 @@ function create(Listener, canvas) {
                 let img = new Image()
                 img.addEventListener('load', (e) => {
                     loaded = true
-                    //newLoad(e.path[0].src)
                     newLoad()
                 })
                 img.addEventListener('error',(e) => newLoad('[ERROR] '))

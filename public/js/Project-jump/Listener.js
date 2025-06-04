@@ -87,8 +87,6 @@ export default function createListener() {
             time: +new Date(),
             lastClickTime: lastClick?.time || null
         }
-        
-
     }
 
     return {
