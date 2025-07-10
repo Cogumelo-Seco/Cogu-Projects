@@ -46,7 +46,7 @@ export default (state, checkPacManDeath, addPoints, [ tile, lineY, lineX ]) => {
                         }
                     }
 
-                    state.playSong(state.defaultSound, { loop: true, volume: 0.1 })
+                    state.playSong(state.defaultSound, { loop: true, volume: 0.3 })
                 }
             }, 100)
             break
