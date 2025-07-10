@@ -7,6 +7,7 @@ export default async (state) => {
         { dir: 'music2.mp3' },
         { dir: 'musicSpecial.mp3' },
         { dir: 'fruit.mp3' },
+        { dir: 'bocchi.mp3' }
     ]
 
     return state.sounds.length

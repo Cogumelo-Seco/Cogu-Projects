@@ -16,12 +16,12 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
             setTimeout(() => state.pauseMovement = false, 1000)
             state.pacManKills += 1000
 
-            state.playSong('deathGhost.mp3')
+            state.playSong('deathGhost.mp3', { volume: 0.3 })
             
             if (state.playeMusic2Timeout) clearTimeout(state.playeMusic2Timeout)
             state.playeMusic2Timeout = setTimeout(() => {
                 if (state.gameStage == 'game') {
-                    state.playSong('music2.mp3', { loop: true, volume: 0.3 })
+                    state.playSong(state.defaultSound, { loop: true, volume: 0.3 })
                 }
             }, 5000)
         }
@@ -46,7 +46,7 @@ export default (state, addPoints, resetGame, [ ghostId, lineY, lineX ]) => {
     } else {
         state.pauseMovement = true
 
-        state.playSong('death.mp3')
+        state.playSong('death.mp3', { volume: 0.3 })
 
         state.pacMan.animate = false
         state.lifes -= 1

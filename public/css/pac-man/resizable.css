@@ -1,5 +1,5 @@
 @media screen and (max-width:750px) {
-    div#game {
+    /*div#game {
         left: 50%;
         top: 0;
         transform: translateX(-50%);
@@ -12,6 +12,14 @@
         height: 300px;
     }
 
+    div#mobileButtonsContaner {
+        display: block;
+    }*/
+    div#game {
+        top: 35%;
+        width: 44vh;
+        height: 45vh;
+    }
     div#mobileButtonsContaner {
         display: block;
     }

@@ -1,5 +1,21 @@
 export default function codesFunction(state, checkPacManDeath, addGhost) {
     return {
+        bocchi: function () {
+            state.pacManStyle = state.pacManStyle == 'seika' ? 'default' : 'seika'
+            state.ghosts[0].color = state.ghosts[0].color == 'red' ? 'kita' : 'red'
+            state.ghosts[1].color = state.ghosts[1].color == 'pink' ? 'bocchi' : 'pink'
+            state.ghosts[2].color = state.ghosts[2].color == 'orange' ? 'nijika' : 'orange'
+            state.ghosts[3].color = state.ghosts[3].color == 'cyan' ? 'ryo' : 'cyan'
+            state.wallColor = state.wallColor == '#141484' ? '#F269BE' : '#141484'
+            state.defaultSound = state.defaultSound == 'bocchi.mp3' ? 'music2.mp3' : 'bocchi.mp3'
+            if (state.gameStage == 'game') {
+                state.song = state.sounds[state.defaultSound]
+                state.song.loop = true
+                state.song.volume = 0.3
+                state.song.play()
+            }
+            return state.pacManStyle == 'seika' ? true : false
+        },
         mario: function () {
             state.pacManStyle = state.pacManStyle == 'mario' ? 'default' : 'mario'
             return state.pacManStyle == 'mario' ? true : false

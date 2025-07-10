@@ -20,13 +20,20 @@ const page = (props) => {
         game.loading()
         game.start('reset')
 
+        let verifyMousePosition = (a) => (
+                //a.layerX > -84 && a.layerX < 84 && a.layerY > 25 && a.layerY < 50 && game.state.gameStage == 'home' && window.innerWidth >= 750 && game.state.loading.loaded >= game.state.loading.total ||
+                //a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 205 && game.state.gameStage == 'home' && window.innerWidth <= 750 && game.state.loading.loaded >= game.state.loading.total
+                //a.screenX/window.innerWidth > 0.39 && a.screenX/window.innerWidth < 0.59 && a.screenY/window.innerHeight > 0.73 && a.screenY/window.innerHeight < 0.77 && game.state.gameStage == 'home' && window.innerWidth >= 0 && game.state.loading.loaded >= game.state.loading.total
+                //a.screenX/window.innerWidth > 0.44 && a.screenX/window.innerWidth < 0.55 && a.screenY/window.innerHeight > 0.69 && a.screenY/window.innerHeight < 0.74 && game.state.gameStage == 'home' && window.innerWidth <= 750 && game.state.loading.loaded >= game.state.loading.total
+                game.state.gameStage == 'home' && game.state.loading.loaded >= game.state.loading.total
+            )
+        //X = 39 - 59  a.screenX/window.innerWidth*100
+        //Y = 73 - 77  a.screenY/window.innerHeight*100
+
         canvas.addEventListener('click', (a) => {
-            if (
-                a.layerX > -84 && a.layerX < 84 && a.layerY > 25 && a.layerY < 45 && game.state.gameStage == 'home' && window.innerWidth >= 750 && game.state.loading.loaded >= game.state.loading.total||
-                a.layerX > -50 && a.layerX < 50 && a.layerY > 188 && a.layerY < 200 && game.state.gameStage == 'home' && window.innerWidth <= 750 && game.state.loading.loaded >= game.state.loading.total
-            ) {
+            if (game.state.gameStage == 'home' && game.state.loading.loaded >= game.state.loading.total) {
                 game.state.gameStage = 'initial'
-                game.playSong('music1.mp3')
+                game.playSong('music1.mp3', { volume: 0.3 })
 
                 document.getElementById('score').style.display = 'block'
                 document.getElementById('highScoreTitle').style.display = 'block'
@@ -64,17 +71,17 @@ const page = (props) => {
                     <a href="https://www.instagram.com/wellingtonfelipe_cogu/" target="_blank" id="owner">Created by: Cogu</a>
                     
                     <div id="game">
-                        <ul id="gameHUD">
-                            <li id="score">0</li>
-                            <li id="highScoreTitle">HIGH SCORE</li>
-                            <li id="highScore">0</li>
-                            <li id="level">Level 0</li>
-                        </ul>
+                        <div id="gameHUD">
+                            <span id="highScoreTitle">HIGH SCORE</span>
+                            <span id="score">0</span>
+                            <span id="highScore">0</span>
+                            <span id="level">Level 0</span>
+                        </div>
                         <canvas id="gameCanvas" />
-                        <ul id="gameHUD2">
-                            <li id="lifes" />
-                            <li id="codesUsed">Codes 0</li>
-                        </ul>
+                        <div id="gameHUD2">
+                            <span id="lifes" />
+                            <span id="codesUsed">Codes 0</span>
+                        </div>
                     </div>
 
                     <div id="mobileButtonsContaner">

@@ -6,7 +6,7 @@ export default (state, checkPacManDeath, addPoints, [ tile, lineY, lineX ]) => {
     switch(type) {
         case 0:
             addPoints(10)
-            state.playSongEffect('coin.mp3')
+            state.playSongEffect('coin.mp3', { volume: 0.2 })
 
             let dotsPercent = state.mapInfo.dots/state.mapInfo.totalDots*100
             if (dotsPercent <= 67 && state.mapInfo.fruit == 0 || dotsPercent <= 34 && state.mapInfo.fruit == 1) {
@@ -33,7 +33,7 @@ export default (state, checkPacManDeath, addPoints, [ tile, lineY, lineX ]) => {
                 state.ghosts[i].scared = true
             }
 
-            state.playSong('musicSpecial.mp3')
+            state.playSong('musicSpecial.mp3', { volume: 0.3 })
 
             let interval = setInterval(() => {
                 if (state.pacManKills <= +new Date()) {
@@ -46,41 +46,41 @@ export default (state, checkPacManDeath, addPoints, [ tile, lineY, lineX ]) => {
                         }
                     }
 
-                    state.playSong('music2.mp3', { loop: true, volume: 0.3 })
+                    state.playSong(state.defaultSound, { loop: true, volume: 0.1 })
                 }
             }, 100)
             break
         case 20:
             morePoints(100)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 21:
             morePoints(300)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
          case 22:
             morePoints(500)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 23:
             morePoints(700)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 24:
             morePoints(1000)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 25:
             morePoints(2000)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 26:
             morePoints(3000)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
         case 27:
             morePoints(5000)
-            state.playSongEffect('fruit.mp3')
+            state.playSongEffect('fruit.mp3', { volume: 0.3 })
             break
     }
 

@@ -74,7 +74,7 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
         state.song.pause()
         state.song = state.sounds['music1.mp3']
         state.song.loop = false
-        state.song.volume = 1
+        state.song.volume = 0.3
         state.song.play()
         state.gameStage = 'initial'
 
@@ -82,7 +82,7 @@ export default (state, Listener, [ resetAll, gameOver ]) => {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            state.song = state.sounds['music2.mp3']
+            state.song = state.sounds[state.defaultSound]
             state.song.loop = true
             state.song.volume = 0.3
             state.song.play()

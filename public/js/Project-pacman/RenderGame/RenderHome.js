@@ -10,7 +10,7 @@ export default async (canvas, game, Listener) => {
     ctx.fillStyle = 'black'
     ctx.fillText('PAC MAN', canvas.width/2-(ctx.measureText('PAC MAN').width/2), 150);
 
-    ctx.font = 'bold 50px game'
+    ctx.font = 'bold 60px game'
     ctx.fillStyle = game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : game.state.darkTheme ? 'white' : 'black'
     ctx.fillText('START GAME', canvas.width/2-(ctx.measureText('START GAME').width/2), canvas.height/1.5);
 
@@ -27,7 +27,7 @@ export default async (canvas, game, Listener) => {
     for (let ghost of game.state.ghosts) {
         menuAnimationX -= game.state.gameGlitched ? tileSize*Math.random()*2 : tileSize
 
-        let ghostImageConfig = game.state.images[`ghosts/${ghost.color}/Ghost.png`]
+        let ghostImageConfig = game.state.images[`Ghosts/${ghost.color}/Ghost.png`]
         let ghostImagePos = ghostImageConfig?.animationConfig['right'][game.state.animations.Ghost.frame]
 
         ctx.fillStyle = 'purple'

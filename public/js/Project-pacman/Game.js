@@ -7,6 +7,8 @@ function createGame(Listener) {
         level: 1,
         codes: 0,
         gameStage: 'loading',
+        defaultSound: 'music2.mp3',
+        wallColor: '#141484',
         pacManStyle: 'default',
         pacManKills: 0,
         gameGlitched: false,
@@ -40,10 +42,12 @@ function createGame(Listener) {
             pacMan: {
                 frame: 0,
                 startFrame: 0,
-                endFrame: 3,
+                endFrame: 2,
                 totalDalay: 60,
                 dalay: 0,
-                loop: true
+                loop: false,
+                boomerang: true,
+                boomerangForward: false
             },
             Ghost: {
                 frame: 0,
@@ -260,7 +264,7 @@ function createGame(Listener) {
             state.gameStage = 'game'
             state.pauseMovement = false
 
-            playSong('music2.mp3', { loop: true, volume: 0.3 })
+            playSong(state.defaultSound, { loop: true, volume: 0.3 })
 
             let totalDots = 0
             for (let i in state.defaultMap) totalDots += (state.defaultMap[i].filter(t => t == 0 || t == 2)).length
@@ -354,7 +358,10 @@ function createGame(Listener) {
                     animation.frame += animation.boomerang ? animation.boomerangForward ? 1 : -1 : 1
                     if (animation.frame > animation.endFrame) {
                         if (!animation.boomerang) animation.frame = animation.loop ? animation.startFrame : animation.endFrame
-                        else animation.boomerangForward = animation.boomerangForward ? false : true
+                        else {
+                            animation.boomerangForward = animation.boomerangForward ? false : true
+                            animation.frame -= 1
+                        }
                     } else if (animation.frame < animation.startFrame) {
                         animation.boomerangForward = animation.boomerangForward ? false : true
                         animation.frame = animation.startFrame

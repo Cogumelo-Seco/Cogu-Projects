@@ -16,7 +16,7 @@ export default async (canvas, game, Listener, randomColor) => {
             lineX = Number(lineX)
             switch (type) {
                 case 0:
-                    ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
+                    ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode || game.state.pacManStyle == 'seika' ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
 
                     if (game.state.lowMode) ctx.fillRect(x+(tileSize*0.37), y+(tileSize*0.37), tileSize*0.25, tileSize*0.25)
                     else {
@@ -30,7 +30,7 @@ export default async (canvas, game, Listener, randomColor) => {
                     break
                 case 1:
                     let wallLineSize = game.state.gameGlitched ? Math.floor(Math.random()*3)+4 : 6
-                    let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? randomColor() : game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : '#141484'
+                    let wallColor = game.state.gameGlitched && glitchedPercent > 80 ? randomColor() : game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : game.state.wallColor
 
                     if (game.state.animations.walls.frame && game.state.gameStage == 'levelWon') ctx.fillStyle = game.state.darkTheme ? 'white' : 'black'
                     else ctx.fillStyle = wallColor
@@ -44,7 +44,7 @@ export default async (canvas, game, Listener, randomColor) => {
                     }
                     break
                 case 2:
-                    if (game.state.animations.specialDots.frame) ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
+                    if (game.state.animations.specialDots.frame) ctx.fillStyle = game.state.gameGlitched || game.state.rainbowMode || game.state.pacManStyle == 'seika' ? randomColor() : game.state.darkTheme ? '#ffb897' : 'rgb(50, 50, 50)'
                     else ctx.fillStyle = 'transparent'
 
                     if (game.state.lowMode) ctx.fillRect(x+(tileSize*0.25), y+(tileSize*0.25), tileSize*0.50, tileSize*0.50)
@@ -120,11 +120,13 @@ export default async (canvas, game, Listener, randomColor) => {
                     if (fruitsIds.includes(type)) {
                         let fruitImage = game.state.images[`Fruits/${type-20}.png`]?.image
 
-                        if (fruitImage) ctx.drawImage(fruitImage, x, y, tileSize, tileSize);
+                        ctx.fillStyle = '#AA2255'
+                        if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
+                        else if (fruitImage) ctx.drawImage(fruitImage, x, y, tileSize, tileSize);
                     } else if (ghostsIds.includes(type)) {
                         let ghost = game.state.ghosts.find(g => g.id == type)
 
-                        let ghostImageConfig = game.state.images[`ghosts/${ghost.color}/Ghost.png`]
+                        let ghostImageConfig = game.state.images[`Ghosts/${ghost.color}/Ghost.png`]
                         let ghostImagePos = ghostImageConfig?.animationConfig[ghost.death ? 'eyes' : ghost.scared ? 'scared' : ghost.animDirection][ghost.death ? 0 : !ghost.scared ? game.state.animations.Ghost.frame : game.state.pacManKills-1800 <= +new Date() ? game.state.animations.Ghost.frame : 0]
         
                         let ghostY = y
@@ -157,8 +159,15 @@ export default async (canvas, game, Listener, randomColor) => {
                         if (game.state.lowMode) ctx.fillRect(x, y, tileSize, tileSize)
                         else if (ghostImageConfig?.image) ctx.drawImage(ghostImageConfig.image, ghostImagePos.x, ghostImagePos.y, ghostImagePos.width, ghostImagePos.height, ghostX, ghostY, tileSize, tileSize);
                     } else {
-                        ctx.fillStyle = randomColor()
-                        ctx.fillRect(x, y, tileSize, tileSize)
+                        let randomImageData = game.state.images[game.state.images[Math.floor(Math.random()*game.state.images.length)]?.dir]
+                   
+                        if (randomImageData?.animationConfig) {
+                            let randomImagePos = randomImageData.animationConfig[Object.keys(randomImageData.animationConfig)[Math.floor(Math.random()*Object.keys(randomImageData.animationConfig).length)]]  
+
+                            ctx.drawImage(randomImageData.image, randomImagePos.x, randomImagePos.y, randomImagePos.width, randomImagePos.height, x, y, tileSize, tileSize);
+                        } else if (randomImageData?.image) ctx.drawImage(randomImageData.image, x, y, tileSize, tileSize);
+                        //ctx.fillStyle = randomColor()
+                        //ctx.fillRect(x, y, tileSize, tileSize)
                     }
             }
 
