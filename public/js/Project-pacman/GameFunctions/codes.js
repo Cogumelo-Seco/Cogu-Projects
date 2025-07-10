@@ -9,6 +9,7 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             state.wallColor = state.wallColor == '#141484' ? '#F269BE' : '#141484'
             state.defaultSound = state.defaultSound == 'bocchi.mp3' ? 'music2.mp3' : 'bocchi.mp3'
             if (state.gameStage == 'game') {
+                state.song.pause()
                 state.song = state.sounds[state.defaultSound]
                 state.song.loop = true
                 state.song.volume = 0.3
