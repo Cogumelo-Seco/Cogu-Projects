@@ -17,6 +17,10 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             }
             return state.pacManStyle == 'seika' ? true : false
         },
+        cj: function () {
+            state.pacManStyle = state.pacManStyle == 'cj' ? 'default' : 'cj'
+            return state.pacManStyle == 'cj' ? true : false
+        },
         mario: function () {
             state.pacManStyle = state.pacManStyle == 'mario' ? 'default' : 'mario'
             return state.pacManStyle == 'mario' ? true : false

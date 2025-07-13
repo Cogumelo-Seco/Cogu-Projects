@@ -4,6 +4,7 @@ export default async (state) => {
         { dir: 'PacMan/guto/PacMan.png', animationConfigDir: 'PacMan/guto/PacMan.json' },
         { dir: 'PacMan/mario/PacMan.png', animationConfigDir: 'PacMan/mario/PacMan.json' },
         { dir: 'PacMan/seika/PacMan.png', animationConfigDir: 'PacMan/seika/PacMan.json' },
+        { dir: 'PacMan/cj/PacMan.png', animationConfigDir: 'PacMan/cj/PacMan.json' },
 
 
         { dir: 'Ghosts/red/Ghost.png', animationConfigDir: 'Ghosts/red/Ghost.json' },
