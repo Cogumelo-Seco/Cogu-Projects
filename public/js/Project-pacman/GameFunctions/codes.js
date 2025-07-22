@@ -1,5 +1,9 @@
 export default function codesFunction(state, checkPacManDeath, addGhost) {
     return {
+        wide: function () {
+            state.canvas.tileSizeW = state.canvas.tileSizeW == state.canvas.tileSize*2 ? state.canvas.tileSize : state.canvas.tileSize*2;
+            return state.canvas.tileSizeW == state.canvas.tileSize*2 ? true : false;
+        },
         bocchi: function () {
             state.pacManStyle = state.pacManStyle == 'seika' ? 'default' : 'seika'
             state.ghosts[0].color = state.ghosts[0].color == 'red' ? 'kita' : 'red'

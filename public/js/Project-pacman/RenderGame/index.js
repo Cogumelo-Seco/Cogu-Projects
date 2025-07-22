@@ -1,6 +1,6 @@
 export default function renderGame(canvas, game, Listener) {
     let glitchedPercent = Math.floor(Math.random()*100)
-    canvas.width = game.state.gameGlitched && glitchedPercent > 95 ? game.state.canvas.width*Math.random() : game.state.canvas.width
+    canvas.width = game.state.gameGlitched && glitchedPercent > 95 ? game.state.canvas.width*Math.random() : game.state.canvas.width*(game.state.canvas.tileSizeW/game.state.canvas.tileSizeH)
     canvas.height = game.state.gameGlitched && glitchedPercent > 95  ? game.state.canvas.height*Math.random() : game.state.canvas.height
 
     const ctx = canvas.getContext('2d')

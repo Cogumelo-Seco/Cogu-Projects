@@ -1,7 +1,7 @@
 export default async (canvas, game, Listener) => {
     const ctx = canvas.getContext('2d')
 
-    let tileSize = 55    
+    let tileSize = 55
 
     ctx.font = 'bold 150px pacfont'
     ctx.fillStyle = game.state.rainbowMode ? `hsl(${game.state.rainbowColor}, 100%, 40%)` : 'rgb(255, 202, 24)'

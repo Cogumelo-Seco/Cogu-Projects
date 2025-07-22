@@ -29,7 +29,9 @@ function createGame(Listener) {
         canvas: {
             width: 1050,
             height: 1100,
-            tileSize: 50
+            tileSize: 50,
+            tileSizeW: 100,
+            tileSizeH: 50
         },
         morePoints: {
             oldPoints: 100,
