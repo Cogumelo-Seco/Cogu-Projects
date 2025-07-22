@@ -30,7 +30,7 @@ function createGame(Listener) {
             width: 1050,
             height: 1100,
             tileSize: 50,
-            tileSizeW: 100,
+            tileSizeW: 50,
             tileSizeH: 50
         },
         morePoints: {
