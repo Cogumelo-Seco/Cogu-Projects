@@ -30,8 +30,9 @@ export default function codesFunction(state, checkPacManDeath, addGhost) {
             return state.pacManStyle == 'mario' ? true : false
         },
         guto: function () {
-            //state.pacManStyle = state.pacManStyle == 'guto' ? 'default' : 'guto'
-            return "Código removido pela falta de capacidade cerebral\ndo Gutinho"//state.pacManStyle == 'guto' ? true : false
+            state.pacManStyle = state.pacManStyle == 'guto' ? 'default' : 'guto'
+            //return "Código removido pela falta de capacidade cerebral\ndo Gutinho"
+            return state.pacManStyle == 'guto' ? 'p-p' : 'q-q'
         },
         frog: function () {            
             if (!state.ghosts.find(g => g.color == 'frog')) addGhost([ 'frog', 14, false, 170, 50 ])

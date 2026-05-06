@@ -63,22 +63,6 @@ const page = (props) => {
         index.state.router = router
 
         render(index);
-
-        /*const playerModeElement = document.getElementById('playerMode')
-        playerModeElement.onclick = () => {
-            index.state.mode = index.state.mode == 'Bomb' ? 'Flag' : 'Bomb'
-            playerModeElement.style.backgroundImage = `url(/imgs/Minesweeper/${index.state.mode}.png)`
-        }
-        /*const canvas = document.getElementById('canvas')        
-        const Listener = createListener();
-        const index = createIndex(Listener, canvas);
-
-        index.loading({ Listener })
-        index.state.router = router
-        Listener.state.index = index
-        //index.start()
-
-        render(canvas, index, Listener);*/
     }, [])
 
     return (

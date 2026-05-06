@@ -117,8 +117,8 @@ function create(Listener, canvas,) {
                 trace: []
             },
             endObject: {
-                X: 3,//Math.floor(Math.random()*19),
-                Y: 3//Math.floor(Math.random()*19)
+                X: 15,//Math.floor(Math.random()*19),
+                Y: 17//Math.floor(Math.random()*19)
             },
             currentMapedObject: null
         }
